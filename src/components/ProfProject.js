@@ -8,26 +8,14 @@ import { Link } from 'react-router-dom';
 import { auth } from "../firebase";
 import { async } from "@firebase/util";
 const ProfProject = () =>{
-const navigate = useNavigate()
-const {logOut,user} = useUserAuth()
-const [projectName, setProjectName] = useState('');
-const [department, setDepartment] = useState('');
-const [deadline, setDeadline] = useState('');
-const [numStudents, setNumStudents] = useState(0);
-const [remark, setRemark] = useState('');
-const [showForm, setShowForm] = useState(false);
-const [profname,setprofname] = useState('')
-function get_profname () {
-  const data_ref = ref(database,"users/" + user.uid)
-  onValue(data_ref,(snapshot) => {
-    setprofname(snapshot.val().UserName)
-  })
-}
-const handleLogout = async(e) =>{
-  await logOut()
-  navigate("/")
-}
+
 function Navbar() {
+  const navigate = useNavigate()
+  const {logOut} = useUserAuth()
+    const handleLogout = async(e) =>{
+      await logOut()
+      navigate("/")
+    }
     return (
       <nav className="navbar">
         <div className="navbar__container">
@@ -53,9 +41,25 @@ function Navbar() {
         </div>
       </nav>
     );
-  
-  }
+}
 const AddProject = () => {
+  const {user} = useUserAuth()
+  const [projectName, setProjectName] = useState('');
+  const [department, setDepartment] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [numStudents, setNumStudents] = useState(0);
+  const [remark, setRemark] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [profname,setprofname] = useState('')
+  function get_profname () {
+    const data_ref = ref(database,"users/" + user.uid)
+    onValue(data_ref,(snapshot) => {
+      setprofname(snapshot.val().UserName)
+    })
+  }
+  const handleprojectname = (event) =>{
+    setProjectName(event.target.value)
+  }
   const handleSubmit = async(event) => {  
       event.preventDefault();
       get_profname()
@@ -76,17 +80,6 @@ const AddProject = () => {
       projectid : total,
       profname : profname,
     })
-    // var arr = []
-    // onValue(ref(database,"users/"+user.uid + "/" + "projects"),(snapshot)=>{
-    //   if(snapshot.exist){
-    //     snapshot.forEach(ele => {
-    //       arr.push(ele.val())
-    //     })
-    //   }
-    // })
-    // arr.push(total)
-    // update(ref(database,"users/"+user.uid + "/"+ "projects"),{project: arr})
-    // console.log(arr)
     setProjectName('');
     setDepartment('');
     setDeadline('');
@@ -110,7 +103,7 @@ const AddProject = () => {
             <input
               type="text"
               value={projectName}
-              onChange={(event) => setProjectName(event.target.value)}
+              onChange={handleprojectname}
             />
           </label>
           <label>
