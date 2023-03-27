@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import {ref,set,push,onValue,update, get} from "firebase/database";
+import {ref,set,push,onValue,update, get,child} from "firebase/database";
 import { Link } from 'react-router-dom';
 import { auth } from "../firebase";
 import { async } from "@firebase/util";
@@ -63,23 +63,23 @@ const AddProject = () => {
   const handleSubmit = async(event) => {  
       event.preventDefault();
       get_profname()
-      var total = 0
-      const data_ref = ref(database,"Projects/")
-      onValue(data_ref ,(snapshot)=> {
-        total = snapshot.size
-      })
-      total += 1
-      set(ref(database,"Projects/" + total),{
+      const projectsRef = ref(database, "Projects");
+      const newProjectRef = push(projectsRef);
+      const newProjectKey = newProjectRef.key;
+      const newProjectData = {
       projectName,
       department,
       deadline,
       numStudents,
       remark,
       email : user.email,
+      projectid : newProjectKey,
       profid: user.uid,
-      projectid : total,
       profname : profname,
-    })
+    }
+    set(newProjectRef, newProjectData);
+    const userProjectsRef = ref(database, `users/${user.uid}/projects/${newProjectKey}`);
+    set(userProjectsRef, true);
     setProjectName('');
     setDepartment('');
     setDeadline('');

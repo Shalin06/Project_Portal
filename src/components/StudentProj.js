@@ -10,6 +10,7 @@ const [showList, setShowList] = useState(false);
 const navigate = useNavigate()
 const {logOut,user} = useUserAuth()
 const [isVisible,setVisible] = useState(false)
+const [isClicked, setIsClicked] = useState(false);
 const handleLogout = async(e) =>{
   await logOut()
   navigate("/")
@@ -74,9 +75,10 @@ const AvailableProject = () =>{
   );
 }
 function addthestudenttoproject(projectid) {
-    const data_ref = ref(database,"Projects/" + projectid +  "/" + "Students/")
-    update(data_ref,{[user.uid]:false})
-    // update()
+    const data_ref = ref(database,`Projects/${projectid}/Students`)
+    update(data_ref,{[user.uid]:"Applied"})
+    const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
+    set(userProjectsRef, "Applied");
 }
 function ProjectDetails({ email,numStudents,projectid,profname,department,deadline,remark}) {
   useEffect(()=>{
@@ -88,6 +90,7 @@ function ProjectDetails({ email,numStudents,projectid,profname,department,deadli
   },[deadline])
   const handleapplyclick = () => {
     addthestudenttoproject(projectid)
+    setIsClicked(true);
   }
   return (
     <div>
@@ -98,7 +101,7 @@ function ProjectDetails({ email,numStudents,projectid,profname,department,deadli
       <p>Deadline: {deadline}</p>
       <p>remark: {remark}</p>
       {(
-          <button onClick={handleapplyclick} disabled={new Date() > new Date(deadline)}>
+          <button onClick={handleapplyclick} disabled={(new Date() > new Date(deadline))}>
             Apply
           </button>
         )}

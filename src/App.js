@@ -24,7 +24,7 @@ function App() {
                 }
               />
               <Route
-                path="/profProject"
+                path="/ProfProject"
                 element={
                   <ProtectedRoute>
                     <ProfProject />

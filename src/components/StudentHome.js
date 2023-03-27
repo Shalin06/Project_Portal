@@ -1,40 +1,18 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import {ref,set} from "firebase/database";
+import {ref,set,onValue,off,child} from "firebase/database";
 import { Link } from 'react-router-dom';
 const StudentHome = () => {
 const navigate = useNavigate()
 const {logOut} = useUserAuth()
+const [items, setItems] = useState([])
 const handleLogout = async(e) =>{
   await logOut()
   navigate("/")
 }
-const items = [
-  {
-    id: 1,
-    Projectname: "Project 1",
-    Professor: "Dip",
-    Department: "CSE",
-    Deadline: "12/10/12"
-  },
-  {
-    id: 2,
-    Projectname: "Project 2",
-    Professor: "Dip",
-    Department: "CSE",
-    Deadline: "12/10/12"
-  },
-  {
-    id: 3,
-    Projectname: "Project 3",
-    Professor: "Dip",
-    Department: "CSE",
-    Deadline: "12/10/12"
-  },
-];
 function Navbar() {
   return (
     <nav className="navbar">
@@ -62,36 +40,68 @@ function Navbar() {
     </nav>
   );
 }
-function Item({ Projectname, Professor, Department,Deadline }) {
+function Item({ ProjectName, Professor, Department }) {
   return (
     <div>
-      <h2>{Projectname}</h2>
+      <h1>Applied For</h1>
+      <h2>{ProjectName}</h2>
       <p>Professor:{Professor}</p>
       <p>Offered to: {Department}</p>
-      <p>Deadline: {Deadline}</p>
     </div>
   );
 }
-function ItemList() {
+const AppliedProject = () => {
+  const { user } = useUserAuth();
+
+  useEffect(() => {
+    const projectsRef = ref(database, "users/" + user.uid + "/projects");
+    const itemsRef = ref(database, "Projects");
+
+    const getAppliedProjects = () => {
+      var newItems = [];
+
+      onValue(projectsRef, (snapshot) => {
+        // console.log(snapshot.val())
+        snapshot.forEach((element) => {
+          if (element.val() === "Applied") {
+            onValue(child(itemsRef,element.key), (snapshot) => {
+              const newval = snapshot.val()
+              newItems.push(newval);
+            });
+          }
+        });
+        setItems(newItems);
+        // console.log(items)
+      });
+    };
+    getAppliedProjects();
+    // console.log(items)
+
+    return () => {
+      off(projectsRef);
+      off(itemsRef);
+    };
+  }, []);
+
   return (
     <div className="item-list">
       {items.map((item) => (
         <Item
-          key={item.id}
-          ProjectName={item.Projectname}
-          Department={item.Department}
-          Professor={item.Professor}
-          Deadline={item.Deadline}
+          key={item.projectid}
+          ProjectName={item.projectName}
+          Department={item.department}
+          Professor={item.profname}
         />
       ))}
     </div>
   );
-}
+};
+
 
   return (
     <>
       <Navbar/>
-      <ItemList/>
+    {/* <AppliedProject/> */}
     </>
   );
 };
