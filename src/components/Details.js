@@ -3,18 +3,18 @@ import { useState,useEffect} from 'react';
 import { useNavigate } from "react-router";
 import {Button } from "react-bootstrap"
 import { useUserAuth } from "../context/UserAuthContext";
-import {ref, onValue,update} from "firebase/database";
+import {ref, onValue,update,set} from "firebase/database";
 import { database } from "../firebase";
 import { Link} from "react-router-dom";
 
 const Details = () => {
   const { user } = useUserAuth();
   const navigate = useNavigate();
-  const [info , setInfo] = useState({
-    UserName :"",
-    Profession: "",
-    Department: "",
-  });
+  // const [info , setInfo] = useState({
+  //   UserName :"",
+  //   Profession: "",
+  //   Department: "",
+  // });
 const {logOut} = useUserAuth()
 const handleLogout = async(e) =>{
   await logOut()
@@ -23,9 +23,9 @@ const handleLogout = async(e) =>{
 
 const Form = () => {
   
-  const [username, setUsername] = useState('');
-  const [department, setDepartment] = useState('');
-  const [profession, setProfession] = useState('');
+  const [UserName, setUsername] = useState('');
+  const [Department, setDepartment] = useState('');
+  const [Profession, setProfession] = useState('');
 
   useEffect(() => {
     const userRef = ref(database,'users/'+ user.uid);
@@ -51,7 +51,7 @@ const Form = () => {
             <button type="submit">Search</button>
           </form>
           <ul className="navbar__links">
-            {profession === 'Professor' ? (
+            {Profession === 'Professor' ? (
               <li><Link to="/profhome">Home</Link></li>) :
               (
               <li><Link to="/studenthome">Home</Link></li> 
@@ -59,7 +59,7 @@ const Form = () => {
             <li>
               <Link to="/Details">Details</Link>
             </li>
-            {profession === 'Professor' ? (
+            {Profession === 'Professor' ? (
               <li><Link to="/profProject">Add Projects</Link></li>) :
               (
               <li><Link to="/StudentProj">Available Projects</Link></li> 
@@ -86,10 +86,10 @@ const Form = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const {UserName, Department,Profession} = info;
-
-    if(UserName && Department && Profession){
-      update(ref(database,"users/"+user.uid),info
+    const info =  {UserName, Department,Profession}
+    // if(UserName && Department && Profession){
+      alert("hi")
+      set(ref(database,"users/"+user.uid),info
       )
       alert('data stored')
       if(Profession === "Professor"){
@@ -99,7 +99,7 @@ const Form = () => {
         navigate("/studenthome")
       }
     }
-  };
+  // };
 
   return (
     <>
@@ -107,13 +107,13 @@ const Form = () => {
     <form onSubmit={handleSubmit}>
       <label>
         Username:
-        <input type="text" value={username} onChange={handleUsernameChange} />
+        <input type="text" value={UserName} onChange={handleUsernameChange} />
       </label>
       <br />
       <label>
         Department:
-        <select value={department} onChange={handleDepartmentChange}>
-          <option value="">{department}</option>
+        <select value={Department} onChange={handleDepartmentChange}>
+          <option value="">{Department}</option>
           <option value="CSE">CSE</option>
           <option value="ME">ME</option>
           <option value="BB">BB</option>
@@ -122,8 +122,8 @@ const Form = () => {
       <br />
       <label>
         Profession:
-        <select value={profession} onChange={handleProfessionChange}>
-          <option value="">{profession} </option>
+        <select value={Profession} onChange={handleProfessionChange}>
+          <option value="">{Profession} </option>
           <option value="Professor">Professor</option>
           <option value="Student">Student</option>
         </select>

@@ -113,7 +113,7 @@ function Navbar() {
     return (
       <>
         <Navbar />
-        <MyProjects/>
+        {/* <MyProjects/> */}
       </>
     );
   };
