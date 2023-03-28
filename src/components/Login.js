@@ -84,7 +84,7 @@ const Login = () => {
       <body>
         <div className="container">
           <div className="login_navbar">
-            <img src="images/logo323.png" className="logo" />
+          <Link to = "/"><img src="images/logo323.png" className="logo" /></Link>
             <nav>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>

@@ -35,7 +35,7 @@ const Signup = () => {
     <>
       <body className="signup_box">
         <div className="container1">
-        <img src="images/logo323.png" className="logo" />
+        <Link to = "/"><img src="images/logo323.png" className="logo" /></Link>
           <div className="cont1">
             <div className="row1">
               <div className="col-3">
