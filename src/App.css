@@ -7,8 +7,8 @@
 .container {
 	width: 100%;
 	min-height: 100vh;
-	padding-left: 8%;
-	padding-right: 8%;
+	padding-left: 5%;
+	padding-right: 5%;
 	box-sizing: border-box;
 	overflow: hidden;
 }
@@ -20,35 +20,43 @@
 }
 
 .logo {
-	width: 200px;
+	width: 300px;
 	cursor: pointer;
-	margin: 0px 0;
+	margin-left: -40px;
+	margin-top: -20px;
+
 }
 
 .form-inline {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
-	margin-left: 150px;
+	margin-left: 250px;
+	margin-top: -20px;
+	gap: 15px;
 
 }
 
 /* Style the input fields */
 .login_input {
 	vertical-align: middle;
-	margin: 5px 8px 5px 0;
-	padding: 10px;
+	margin: .5rem;
+	margin-top: -1px;
 	background-color: #fff;
-	border: 1px solid #ddd;
+	border: 1px solid #ccc8c8;
 }
 
 /* Style the submit button */
-.form-inline button {
-	padding: 10px 15px;
+.LoginButton {
 	background-color: #3D2460;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
+	font-size: 15px;
+	margin-top: -10px;
+	margin-left: 10px;
+	width: 140px;
+	height: 37px;
 }
 
 .form-inline button:hover {
@@ -59,24 +67,24 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	margin: 100px 0;
+	margin: 60px 0;
 }
 .col-1{
 	flex-basis: 40%;
-	position: relative;
-	margin-left: 150px;
+	margin-top: 10px;
 }
 
 .col-1 h2{
-	font-size: 40px;
+	font-size: 51px;
+	font-style: bold;
 	color: #3D2460;
 }
 .col-1 h3{
-	font-size: 40px;
+	font-size: 51px;
 	color: #3D2460;
 }
 .col-1 h4{
-	font-size: 40px;
+	font-size: 51px;
 	color: #3D2460;
 }
 
@@ -91,30 +99,12 @@
 	font-size: 15px;
 	font-style: bold;
 	margin-top: 10px;
+	border-radius: 5px;
 }
 
-.col-1::after{
-	content:'';
-	width: 8px;
-	height: 65%;
-	background: linear-gradient(#36dafb, #3D2460);
-	position:absolute;
-	left: -40px;
-	top:8px;
-}
-.col-2{
-	position: relative;
-	flex-basis: 60%;
-	display: flex;
-	align-items: center;
-}
 .g-btn {
-	margin-top: 10px;
-	margin-left: 49px;
-	width: 60% !important;
-	height: 10px !important;
-	line-height: 32px !important;
-	font-size: 13px !important;
+	width: 5% !important;
+	height: 20% !important;
 }
 
 .g-btn>div,
@@ -122,18 +112,129 @@
 	width: 30px !important;
 	height: 30px !important;
 }
+.col-2{
+	position: relative;
+	flex-basis: 60%;
+	display: flex;
+	align-items: center;
+}
 .col-2 .controller{
-	width: 100%;
-	margin-top: -60px;
+	width: 75%;
+	margin-top: -310px;
+	margin-left: 550px;
+}
+.color-box{
+	position: absolute;
+	right: 0;
+	top:0;
+	background: linear-gradient(#36dafb, #3D2460);
+	border-radius: 20px 0 0 20px;
+	height: 100%;
+	width: 80%;
+	z-index: -1;
+	transform: translateX(150px);
 }
 /* Add responsiveness - display the form controls vertically instead of horizontally on screens that are less than 800px wide */
-@media (max-width: 800px) {
-	.form-inline input {
-		margin: 10px 0;
+@media only screen and (max-width:700px){
+	.form-inline{
+		width: 100%;
+		margin-top: 20px;
+		background: linear-gradient(#fdffff, #00eeff);
+		position: absolute;
+		top:75px;
+		right: 0;
+		z-index: 2;
+	}
+	.row{
+		margin-left: 10px;
 	}
 
-	.form-inline {
-		flex-direction: column;
-		align-items: stretch;
+	.col-2{
+		flex-basis: 100%;
+		margin-bottom: 50px;
 	}
+	.color-box{
+		transform: translateX(75px);
+	}
+	.col-1{
+		flex-basis: 100%;
+	}
+	.col-1 h2{
+		font-size: 20px;
+	}
+	.col-1 h3{
+		font-size: 20px;
+	}
+	.col-1 h4{
+		font-size: 20px;
+	}
+}
+
+
+.container1 {
+	width: 100%;
+	height: 850px;
+	padding-left: 5%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.cont1{
+	margin-top: 100px;
+	margin-left: 850px;
+	padding-top: 35px;
+	padding-bottom: 30px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	width: 28%;
+}
+.row1{
+	display: flex;
+}
+
+.col-3{
+	flex-basis: 40%;
+	margin-top: 20px;
+	margin-left: 11%;
+}
+.col-3 h2{
+	font-size: 25px;
+}
+
+.col-3 h3{
+	font-size: 15px;
+	color: #b9bcbc;
+}
+
+.signup_incline{
+	margin-left: 20px;
+	padding-left: 10px;
+	width: 300px;
+	margin-bottom: 20px;
+}
+
+.signup_input{
+	border: 1px solid #bdbdbd;
+	color: white;
+	cursor: pointer;
+	font-size: 15px;
+	margin-top: 15px;
+	margin-left: 10px;
+}
+
+.signup_button{
+	background-color: #3D2460;
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	font-size: 15px;
+	margin-top: 15px;
+	margin-left: 10px;
+	width: 292px;
+	height: 40px;
+
+}
+
+.login_link{
+	margin-left: 40px;
+	font-size: 12px;
+	margin-top: -15px;
 }

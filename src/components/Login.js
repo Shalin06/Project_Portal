@@ -7,6 +7,8 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
 import { ref, onValue } from "firebase/database";
 import { auth } from "../firebase";
+import study from './study.json';
+import Lottie from "lottie-react"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -82,7 +84,7 @@ const Login = () => {
       <body>
         <div className="container">
           <div className="login_navbar">
-            <img src={'Images/final_logo.png'} className="logo" alt="It's is not loding"/>
+            <img src="images/logo323.png" className="logo" />
             <nav>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
@@ -101,29 +103,26 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
-                  <div>
-                    <GoogleButton
-                      className="g-btn"
-                      type="dark"
-                      onClick={handleGoogleSignIn}
-                    />
-                    </div>
                   <Button variant="primary" type="Submit" className="LoginButton">
                     Login
                   </Button>
+
                 </div>
               </Form>
             </nav>
+          </div>
+          <div className="SignUp_text">
+            Don't have an account? &nbsp; <Link to="/signup" className="Signup_link"> Sign up</Link>
           </div>
           <div className="row">
             <div className="col-1">
               <h2>Boost up your skills</h2>
               <h3>with new ways of</h3>
               <h4>learning</h4>
-              <button type = "button" className="btn1">Apply</button>
+              <button type="button" className="btn1">Apply</button>
             </div>
-            <div className="col-2">
-              <img src = "images/back22.jpg" className="controller"/>
+            <div  style={{width : "40%",marginLeft:'-50px',marginTop:'-50px'}}>
+              <Lottie loop = {true} animationData = {study} classname = "animation1"/>
             </div>
           </div>
         </div>
