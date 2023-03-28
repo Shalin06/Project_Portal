@@ -111,15 +111,12 @@ const Login = () => {
               </Form>
             </nav>
           </div>
-          <div className="SignUp_text">
-            Don't have an account? &nbsp; <Link to="/signup" className="Signup_link"> Sign up</Link>
-          </div>
           <div className="row">
             <div className="col-1">
               <h2>Boost up your skills</h2>
               <h3>with new ways of</h3>
               <h4>learning</h4>
-              <button type="button" className="btn1">Apply</button>
+              <Link to="/signup" className="Signup_link"> <button type="button" className="btn1">Apply</button></Link>
             </div>
             <div  style={{width : "40%",marginLeft:'-50px',marginTop:'-50px'}}>
               <Lottie loop = {true} animationData = {study} classname = "animation1"/>
