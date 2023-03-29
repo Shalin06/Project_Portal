@@ -11,6 +11,7 @@ const StudentHome = () => {
   const navigate = useNavigate()
   const { logOut } = useUserAuth()
   const [items, setItems] = useState([])
+  const [showList, setShowList] = useState(false);
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -39,16 +40,7 @@ const StudentHome = () => {
             </li>
           </ul>
         </div>
-        <img src = "images/631.jpg" className="logo4" width = "900"/>
-        <div style={{ width: "40%", marginLeft: '700px', marginTop: '900px' }}>
-          <Lottie loop={true} animationData={student} classname="animation2" />
-        </div>
-        <div className="row3">
-        <div className="col5">
-              <h2 className="col6">Learning is a treasure that will</h2>
-              <h3>follow its owner everywhere</h3>
-        </div>
-        </div>
+        
       </nav>
     );
   }
@@ -62,58 +54,76 @@ const StudentHome = () => {
       </div>
     );
   }
-  const AppliedProject = () => {
-    const { user } = useUserAuth();
-
+  const MyProjects = () => {
+    const [projectInfo, setProjectinfo] = useState([])
+    const {user} =useUserAuth()
     useEffect(() => {
-      const projectsRef = ref(database, "users/" + user.uid + "/projects");
-      const itemsRef = ref(database, "Projects");
-
-      const getAppliedProjects = () => {
-        var newItems = [];
-
-        onValue(projectsRef, (snapshot) => {
-          // console.log(snapshot.val())
-          snapshot.forEach((element) => {
-            if (element.val() === "Applied") {
-              onValue(child(itemsRef, element.key), (snapshot) => {
-                const newval = snapshot.val()
-                newItems.push(newval);
-              });
+      const data_ref = ref(database, "Projects/")
+      var arr = []
+      onValue(data_ref, (snapshot) => {
+        snapshot.forEach(element => {
+          const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
+          onValue(userProjectsRef,(snapshot2) => {
+            if(snapshot2.exists){
+              if(snapshot2.val() === "Applied"){
+                 const newele = element.val()
+                 arr.push(newele)
+              }
             }
-          });
-          setItems(newItems);
-          // console.log(items)
+          })
+
         });
-      };
-      getAppliedProjects();
-      // console.log(items)
-
-      return () => {
-        off(projectsRef);
-        off(itemsRef);
-      };
-    }, []);
-
+        setProjectinfo(arr)
+      })
+    }, [])
+    const handleButtonClick = () => {
+      setShowList(!showList);
+    };
+    function ProjectDetails({ email, numStudents, projectid, profname, department, deadline, remark }) {
+      return (
+        <div className="project_detail">
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Status: Applied</h6>
+        </div>
+      );
+    }
     return (
-      <div className="item-list">
-        {items.map((item) => (
-          <Item
-            key={item.projectid}
-            ProjectName={item.projectName}
-            Department={item.department}
-            Professor={item.profname}
-          />
-        ))}
+      <div classname = "availabel_button">
+        <div className="availabel_click">
+        <button className="a1"
+        onClick={handleButtonClick} >{showList ? 'Hide My Projects' : 'Show My Projects'} </button>
+        </div>
+        {showList && (
+          <div>
+            {projectInfo.map((project, index) => (
+              <ProjectDetails key={index} {...project} />
+            ))}
+          </div>
+        )}
       </div>
     );
-  };
+  }
 
 
   return (
     <>
       <Navbar />
-      {/* <AppliedProject/> */}
+      <MyProjects/>
+      {/* <img src = "images/631.jpg" className="logo4" width = "900"/> */}
+        <div style={{ width: "40%", marginLeft: '700px', marginTop: '100px' }}>
+          <Lottie loop={true} animationData={student} classname="animation2" />
+        </div>
+        <div className="row3">
+        <div className="col5">
+              <h2 className="col6">Learning is a treasure that will</h2>
+              <h3>follow its owner everywhere</h3>
+        </div>
+        </div>
     </>
   );
 };

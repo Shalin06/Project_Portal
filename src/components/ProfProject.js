@@ -18,7 +18,7 @@ function Navbar() {
     }
     return (
       <nav className="navbar">
-        <img src="images/logo323.png" className="logo2" />
+         <Link to="/profhome"><img src="images/logo323.png" className="logo2" /></Link>
         <div className="navbar__container">
           <form className="navbar__search">
           <input type="text" placeholder="Search for anything" className="search_input"/>

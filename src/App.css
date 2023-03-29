@@ -110,18 +110,14 @@ body {
 	border-radius: 5px;
 }
 
-.g-btn {
-	margin-top: -10px;
+.gbtn {
 	width: 5% !important;
 	height: 20% !important;
 	margin-left: 10px;
 	border-radius: 5px;
 }
-
-.g-btn>div,
-.g-btn>div>svg {
-	width: 40px !important;
-	height: 35px !important;
+.gbtn:hover{
+	color: #00eeff !important;
 }
 
 .col-2 {

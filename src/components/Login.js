@@ -9,6 +9,7 @@ import { ref, onValue } from "firebase/database";
 import { auth } from "../firebase";
 import study from './study.json';
 import Lottie from "lottie-react"
+import { hover } from "@testing-library/user-event/dist/hover";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -106,12 +107,13 @@ const Login = () => {
                   <GoogleButton
                       className="g-btn"
                       type="light"
-                      label=""
+                      label="Login with Google"
                       onClick={handleGoogleSignIn}
                       />
                   <Button variant="primary" type="Submit" className="LoginButton">
                     Login
                   </Button>
+                  
                 </div>
               </Form>
             </nav>

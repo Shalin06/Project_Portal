@@ -12,11 +12,6 @@ import Lottie from "lottie-react"
 const Details = () => {
   const { user } = useUserAuth();
   const navigate = useNavigate();
-  // const [info , setInfo] = useState({
-  //   UserName :"",
-  //   Profession: "",
-  //   Department: "",
-  // });
 const {logOut} = useUserAuth()
 const handleLogout = async(e) =>{
   await logOut()
@@ -46,7 +41,11 @@ const Form = () => {
   function Navbar() {
     return (
       <nav className="navbar">
-        <img src="images/logo323.png" className="logo2" />
+        {Profession === 'Professor' ? (
+              <Link to="/profhome" ><img src="images/logo323.png" className="logo2" /></Link>) :
+              (
+              <Link to="/studenthome"><img src="images/logo323.png" className="logo2" /></Link>
+             )} 
         <div className="navbar__container">
           <form className="navbar__search">
             <input type="text" placeholder="Search for anything" className="search_input"/>
@@ -142,9 +141,7 @@ const Form = () => {
       <br />
       <button type="submit" className="detail_save">Save</button>
     </form>
-    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-400px' }}>
-          <Lottie loop={true} animationData={detail} classname="animation2" />
-        </div>
+    
     </div>
     </>
   );
@@ -153,6 +150,9 @@ const Form = () => {
   return (
     <>
     <Form/>
+    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-750px' }}>
+          <Lottie loop={true} animationData={detail} classname="animation2" />
+    </div>
     </>
   );
 }

@@ -18,7 +18,7 @@ const StudentProj = () => {
   function Navbar() {
     return (
       <nav className="navbar">
-        <img src="images/logo323.png" className="logo2" />
+        <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}><img src="images/logo323.png" className="logo2" /></Link>
         <div className="navbar__container">
           <form className="navbar__search">
             <input type="text" placeholder="Search for anything" className="search_input" />
@@ -49,9 +49,19 @@ const StudentProj = () => {
       var arr = []
       onValue(data_ref, (snapshot) => {
         snapshot.forEach(element => {
+          const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
+          onValue(userProjectsRef,(snapshot2) => {
+            if(snapshot2.exists){
+              if(snapshot2.val() === "Applied"){
+                 var x =  1
+              }
+              else{
+                const newele = element.val()
+                arr.push(newele)
+              }
+            }
+          })
 
-          const newele = element.val()
-          arr.push(newele)
         });
         setProjectinfo(arr)
       })
@@ -89,10 +99,17 @@ const StudentProj = () => {
       if (currentdate > deadlinedate) {
         setVisible(false)
       }
+      const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
+      onValue(userProjectsRef,(snapshot) => {
+        if(snapshot.val() === "Applied"){
+          setVisible(false)
+        }
+      })
     }, [deadline])
     const handleapplyclick = () => {
       addthestudenttoproject(projectid)
       setIsClicked(true);
+      setVisible(false)
     }
     return (
       <div className="project_detail">
@@ -103,14 +120,63 @@ const StudentProj = () => {
         <h5>Deadline: {deadline}</h5>
         <h6>Remark: {remark}</h6>
         {(
-          <button className="apply_button" onClick={handleapplyclick} disabled={(new Date() > new Date(deadline))}>
+          <button className="apply_button" onClick={handleapplyclick} disabled={isVisible}>
             Apply
           </button>
         )}
       </div>
     );
   }
+  const MyProjects = () => {
+    const [projectInfo, setProjectinfo] = useState([])
+    useEffect(() => {
+      const data_ref = ref(database, "Projects/")
+      var arr = []
+      onValue(data_ref, (snapshot) => {
+        snapshot.forEach(element => {
+          const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
+          onValue(userProjectsRef,(snapshot2) => {
+            if(snapshot2.exists){
+              if(snapshot2.val() === "Applied"){
+                 const newele = element.val()
+                 arr.push(newele)
+              }
+            }
+          })
 
+        });
+        setProjectinfo(arr)
+      })
+    }, [])
+    const handleButtonClick = () => {
+      setShowList(!showList);
+    };
+    function ProjectDetails({ email, numStudents, projectid, profname, department, deadline, remark }) {
+      useEffect(() => {
+        const currentdate = new Date()
+        const deadlinedate = new Date(deadline)
+        if (currentdate > deadlinedate) {
+          setVisible(false)
+        }
+        const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
+        onValue(userProjectsRef,(snapshot) => {
+          if(snapshot.val() === "Applied"){
+            setVisible(false)
+          }
+        })
+      }, [deadline])
+      return (
+        <div className="project_detail">
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+        </div>
+      );
+    }
+  }
   return (
     <>
       <Navbar />
