@@ -9,6 +9,7 @@ import student1 from './student.json';
 import Lottie from "lottie-react"
 // import {props}
 const ProfessorHome = () => {
+const [students , setStudents] = useState([])
 const [showList, setShowList] = useState(false)
 const navigate = useNavigate()
 const {logOut} = useUserAuth()
@@ -63,15 +64,38 @@ function Navbar() {
     const handleButtonClick = () => {
       setShowList(!showList);
     };
-    function ProjectDetails({ email, numStudents, projectid, profname, department, deadline, remark }) {
+    function ProjectDetails({ 
+      projectName,email, numStudents, projectid, profname, department, deadline, remark }) {
+      
+      var arr = []
+      const data_ref = ref(database,`Projects/${projectid}/Students`)
+      onValue(data_ref,(snapshot) => {
+        if(snapshot.exists){
+          snapshot.forEach(ele => {
+            const new_ref = ref(database,`users/${ele.key}/UserName`)
+            // console.log(`users/${ele.key}`)
+            onValue(new_ref,(snapshot2) => {
+              arr.push(snapshot2.val())
+            })
+            
+          })
+        }
+      })
+      console.log(arr)
       return (
         <div className="project_detail">
+          <h1>Project: {projectName}</h1>
           <h1>Professor: {profname}</h1>
           <h2>Email: {email}</h2>
           <h3>Number of Students: {numStudents}</h3>
           <h4>Offered to: {department}</h4>
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
+            <ol>
+            {students.map(student => (
+              <li key={student}>{student}</li>
+            ))}
+          </ol> 
         </div>
       );
     }
@@ -97,11 +121,11 @@ function Navbar() {
         <Navbar />
         <MyProjects/>
         <div style={{ width: "40%", marginLeft: '700px', marginTop: '50px' }}>
-          <Lottie loop={true} animationData={student1} classname="animation2" />
+          <Lottie loop={true} animationData={student1} className="animation2" />
         </div>
-        <div className="row3">
+        <div className="row3" >
         <div className="col5">
-              <h2 className="col6">Learning is a treasure that will</h2>
+              <h2 className="col6" style= {{marginTop: '50px' }}>Learning is a treasure that will</h2>
               <h3 className="col6">follow its owner everywhere</h3>
         </div>
         </div>
