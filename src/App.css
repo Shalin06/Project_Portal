@@ -35,7 +35,7 @@ body {
 	display: flex;
 	flex-flow: row wrap;
 	align-items: center;
-	margin-left: 230px;
+	margin-left: 20px;
 	margin-top: -32px;
 	margin-right: 0px;
 	gap: 10px;
@@ -113,6 +113,8 @@ body {
 .gbtn {
 	width: 5% !important;
 	height: 20% !important;
+	padding-left: 20pxc;
+	margin-left: 20px;
 	margin-left: 10px;
 	border-radius: 5px;
 }
@@ -412,8 +414,8 @@ u1 l1 Link{
 	height: 2000px;
 }
 
-.row3 {
-	margin-top: -575px;
+.col5 h2{
+	margin-top: 330px;
 	margin-left: 100px;
 }
 
