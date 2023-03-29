@@ -5,6 +5,8 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
 import {ref,set,off,onValue,child} from "firebase/database";
 import { Link } from 'react-router-dom';
+import student1 from './student.json';
+import Lottie from "lottie-react"
 // import {props}
 const ProfessorHome = () => {
 const [items, setItems] = useState([])
@@ -18,26 +20,36 @@ const handleLogout = async(e) =>{
 function Navbar() {
     return (
       <nav className="navbar">
+        <img src="images/logo323.png" className="logo2" />
         <div className="navbar__container">
-          <h1 className="navbar__heading">Project Portal</h1>
           <form className="navbar__search">
-            <input type="text" placeholder="Search" />
-            <button type="submit">Search</button>
+          <input type="text" placeholder="Search for anything" className="search_input"/>
+            <button type="submit" className="search_button">Search</button>
           </form>
           <ul className="navbar__links">
             <li>
-              <Link to="/profhome">Home</Link>
+              <Link to="/profhome"style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li>
-              <Link to="/Details">Details</Link>
+              <Link to="/Details"style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
             </li>
             <li>
-              <Link to="/ProfProject">Add Projects</Link>
+              <Link to="/ProfProject"style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link>
             </li>
               <li>
-                 <Button onClick={handleLogout}> Log out</Button>
+              <Button onClick={handleLogout} className = "logout"> Log out</Button>
              </li>
           </ul>
+        </div>
+        <img src = "images/631.jpg" className="logo4" width = "900"/>
+        <div style={{ width: "40%", marginLeft: '700px', marginTop: '900px' }}>
+          <Lottie loop={true} animationData={student1} classname="animation2" />
+        </div>
+        <div className="row3">
+        <div className="col5">
+              <h2 className="col6">Learning is a treasure that will</h2>
+              <h3 className="col6">follow its owner everywhere</h3>
+        </div>
         </div>
       </nav>
     );
@@ -91,6 +103,7 @@ function Navbar() {
   
     return (
       <div className="item-list">
+        <img src="images/631.jpg" className="logo4" />
         {items.map((item) => (
           <Item
             key={item.projectid}

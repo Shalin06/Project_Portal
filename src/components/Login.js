@@ -103,10 +103,15 @@ const Login = () => {
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
+                  <GoogleButton
+                      className="g-btn"
+                      type="light"
+                      label=""
+                      onClick={handleGoogleSignIn}
+                      />
                   <Button variant="primary" type="Submit" className="LoginButton">
                     Login
                   </Button>
-
                 </div>
               </Form>
             </nav>

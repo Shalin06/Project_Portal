@@ -6,6 +6,8 @@ import { useUserAuth } from "../context/UserAuthContext";
 import {ref, onValue,update,set} from "firebase/database";
 import { database } from "../firebase";
 import { Link} from "react-router-dom";
+import detail from './deatil.json';
+import Lottie from "lottie-react"
 
 const Details = () => {
   const { user } = useUserAuth();
@@ -44,28 +46,28 @@ const Form = () => {
   function Navbar() {
     return (
       <nav className="navbar">
+        <img src="images/logo323.png" className="logo2" />
         <div className="navbar__container">
-          <h1 className="navbar__heading">Project Portal</h1>
           <form className="navbar__search">
-            <input type="text" placeholder="Search" />
-            <button type="submit">Search</button>
+            <input type="text" placeholder="Search for anything" className="search_input"/>
+            <button type="submit" className="search_button">Search</button>
           </form>
           <ul className="navbar__links">
             {Profession === 'Professor' ? (
-              <li><Link to="/profhome">Home</Link></li>) :
+              <li><Link to="/profhome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link></li>) :
               (
-              <li><Link to="/studenthome">Home</Link></li> 
+              <li><Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link></li> 
              )} 
             <li>
-              <Link to="/Details">Details</Link>
+              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
             </li>
             {Profession === 'Professor' ? (
-              <li><Link to="/profProject">Add Projects</Link></li>) :
+              <li><Link to="/profProject" style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link></li>) :
               (
-              <li><Link to="/StudentProj">Available Projects</Link></li> 
+              <li><Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link></li> 
              )}
             <li>
-                <Button onClick={handleLogout}> Log out</Button>
+                <Button onClick={handleLogout} className = "logout"> Log out</Button>
             </li>
           </ul>
         </div>
@@ -104,25 +106,33 @@ const Form = () => {
   return (
     <>
     <Navbar/>
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input type="text" value={UserName} onChange={handleUsernameChange} />
+    <div className="container2">
+    <form onSubmit={handleSubmit} className = "deatil_form">
+      <div className="col4">
+          <h2>Details Form</h2>
+      </div>
+      <label className="username_label">
+        Username :
+        <input type="text" value={UserName} onChange={handleUsernameChange} className = "username_input"/>
       </label>
       <br />
-      <label>
-        Department:
-        <select value={Department} onChange={handleDepartmentChange}>
-          <option value="">{Department}</option>
+      <label div className="department_select">
+        Department :
+        <select value={Department} onChange={handleDepartmentChange} className = "department_option" >
+          <option value="" className="d_option">{Department}</option>
           <option value="CSE">CSE</option>
           <option value="ME">ME</option>
-          <option value="BB">BB</option>
+          <option value="AI">AI</option>
+          <option value="EE">EE</option>
+          <option value="IH">IH</option>
+          <option value="CH">CH</option>
+          <option value="CI">CI</option>
         </select>
       </label>
       <br />
-      <label>
-        Profession:
-        <select value={Profession} onChange={handleProfessionChange}>
+      <label className="profession_select">
+        Profession :
+        <select value={Profession} onChange={handleProfessionChange} className = "profession_option" >
           <option value="">{Profession} </option>
           <option value="Professor">Professor</option>
           <option value="Student">Student</option>
@@ -130,8 +140,12 @@ const Form = () => {
       </label>
       <br />
       <br />
-      <button type="submit">Save</button>
+      <button type="submit" className="detail_save">Save</button>
     </form>
+    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-400px' }}>
+          <Lottie loop={true} animationData={detail} classname="animation2" />
+        </div>
+    </div>
     </>
   );
 };

@@ -18,25 +18,25 @@ function Navbar() {
     }
     return (
       <nav className="navbar">
+        <img src="images/logo323.png" className="logo2" />
         <div className="navbar__container">
-          <h1 className="navbar__heading">Project Portal</h1>
           <form className="navbar__search">
-            <input type="text" placeholder="Search" />
-            <button type="submit">Search</button>
+          <input type="text" placeholder="Search for anything" className="search_input"/>
+            <button type="submit" className="search_button">Search</button>
           </form>
           <ul className="navbar__links">
             <li>
-              <Link to="/profhome">Home</Link>
+              <Link to="/profhome"style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li>
-              <Link to="/Details">Details</Link>
+              <Link to="/Details"style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
             </li>
             <li>
-              <Link to="/ProfProject">Add Projects</Link>
+              <Link to="/ProfProject"style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link>
             </li>
-            <li>
-              <Button onClick={handleLogout}> Log out</Button>
-            </li>
+              <li>
+              <Button onClick={handleLogout} className = "logout"> Log out</Button>
+             </li>
           </ul>
         </div>
       </nav>
@@ -92,55 +92,76 @@ const AddProject = () => {
     setShowForm(!showForm);
   };
   return (
-    <div>
-      <button onClick={toggleForm}>
+    <div className="container6">
+      <div className="show_form">
+      <button onClick={toggleForm} className = "show_form_button">
         {showForm ? 'Hide Form' : 'Show Form'}
       </button>
+      </div>
+      <div className="show_form_input1">
       {showForm && (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className = "show_form_input">
+          <div className="column">
+          <div className="input-box">
           <label>
             Project Name:
-            <input
+            <input className="show_form_width"
               type="text"
               value={projectName}
               onChange={handleprojectname}
             />
           </label>
+          </div>
+          <div className="input-box">
           <label>
             Offered to Department:
-            <input
+            <input className="show_form_width"
               type="text"
               value={department}
               onChange={(event) => setDepartment(event.target.value)}
             />
           </label>
+          </div>
+          </div>
+          <div className="column1">
+          <div className="input-box">
           <label>
             Deadline:
-            <input
+            <input className="show_form_width"
               type="Date"
               value={deadline}
               onChange={(event) => setDeadline(event.target.value)}
             />
           </label>
+          </div>
+          
+          <div className="input-box">
           <label>
             Number of Students:
-            <input
+            <input className="show_form_width"
               type="number"
               value={numStudents}
               onChange={(event) => setNumStudents(event.target.value)}
             />
           </label>
+          </div>
+          </div>
+          <div className="input-box">
           <label>
             Remark:
-            <input
+            <input className="show_form_width1"
               type="text"
               value={remark}
               onChange={(event) => setRemark(event.target.value)}
             />
           </label>
-          <button type="submit">Submit</button>
+          </div>
+          <div className="input-box">
+          <button type="submit" className="show_form_button1">Submit</button>
+          </div>
         </form>
       )}
+      </div>
     </div>
   );
 }
