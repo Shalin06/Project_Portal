@@ -79,9 +79,10 @@ const StudentHome = () => {
     const handleButtonClick = () => {
       setShowList(!showList);
     };
-    function ProjectDetails({ email, numStudents, projectid, profname, department, deadline, remark }) {
+    function ProjectDetails({ projectName,email, numStudents, projectid, profname, department, deadline, remark }) {
       return (
         <div className="project_detail">
+          <h1>Project: {projectName}</h1>
           <h1>Professor: {profname}</h1>
           <h2>Email: {email}</h2>
           <h3>Number of Students: {numStudents}</h3>
