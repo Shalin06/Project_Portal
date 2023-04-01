@@ -76,6 +76,7 @@ const AddProject = () => {
       projectid : newProjectKey,
       profid: user.uid,
       profname : profname,
+      vacancy : numStudents
     }
     set(newProjectRef, newProjectData);
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${newProjectKey}`);

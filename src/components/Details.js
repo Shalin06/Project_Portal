@@ -115,7 +115,7 @@ const Form = () => {
         <input type="text" value={UserName} onChange={handleUsernameChange} className = "username_input"/>
       </label>
       <br />
-      <label div className="department_select">
+      <label className="department_select">
         Department :
         <select value={Department} onChange={handleDepartmentChange} className = "department_option" >
           <option value="" className="d_option">{Department}</option>
@@ -151,7 +151,7 @@ const Form = () => {
     <>
     <Form/>
     <div style={{ width: "40%", marginLeft: '150px', marginTop: '-750px' }}>
-          <Lottie loop={true} animationData={detail} classname="animation2" />
+          <Lottie loop={true} animationData={detail} className="animation2" />
     </div>
     </>
   );

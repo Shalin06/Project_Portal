@@ -126,7 +126,7 @@ const Login = () => {
               <Link to="/signup" className="Signup_link"> <button type="button" className="btn1">Apply</button></Link>
             </div>
             <div  style={{width : "40%",marginLeft:'-50px',marginTop:'-50px'}}>
-              <Lottie loop = {true} animationData = {study} classname = "animation1"/>
+              <Lottie loop = {true} animationData = {study} className = "animation1"/>
             </div>
           </div>
         </div>
