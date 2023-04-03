@@ -10,6 +10,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 import ProfProject from "./components/ProfProject"
 import StudentProj from "./components/StudentProj"
+import Research from "./components/Research"
+import Faculty from "./components/Faculty"
 function App() {
   return (
     <>
@@ -59,6 +61,10 @@ function App() {
               <Route path="/signup" element={<Signup />} />
             </Routes>
           </UserAuthContextProvider>
+          <Routes>
+            <Route path="/research" element={<Research />} />
+            <Route path="/faculty" element={<Faculty />} />
+          </Routes>
     </>
   );
 }

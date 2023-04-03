@@ -12,6 +12,27 @@ import Lottie from "lottie-react"
 import { hover } from "@testing-library/user-event/dist/hover";
 
 const Login = () => {
+  function Navbar() {
+    const navigate = useNavigate()
+      return (
+        <nav className="navbar">
+           <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+          <div className="navbar__container">
+            <ul className="navbar__links">
+              <li>
+                <Link to="/faculty"style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+              </li>
+              <li>
+                <Link to="/research"style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+              </li>
+              <li>
+                <Link to="/signup"style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      );
+  }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -80,12 +101,11 @@ const Login = () => {
   };
 
   return (
-
     <>
       <body>
         <div className="container">
+          <Navbar/>
           <div className="login_navbar">
-          <Link to = "/"><img src="images/logo323.png" className="logo" /></Link>
             <nav>
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
