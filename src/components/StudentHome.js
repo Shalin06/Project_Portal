@@ -44,16 +44,6 @@ const StudentHome = () => {
       </nav>
     );
   }
-  function Item({ ProjectName, Professor, Department }) {
-    return (
-      <div>
-        <h1>Applied For</h1>
-        <h2>{ProjectName}</h2>
-        <p>Professor:{Professor}</p>
-        <p>Offered to: {Department}</p>
-      </div>
-    );
-  }
   const MyProjects = () => {
     const [projectInfo, setProjectinfo] = useState([])
     const {user} =useUserAuth()
@@ -65,7 +55,7 @@ const StudentHome = () => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
           onValue(userProjectsRef,(snapshot2) => {
             if(snapshot2.exists){
-              if(snapshot2.val() === "Applied"){
+              if(snapshot2.val() === "Applied" || snapshot2.val() === "Accepted"){
                  const newele = element.val()
                  arr.push(newele)
               }
@@ -89,7 +79,7 @@ const StudentHome = () => {
           <h4>Offered to: {department}</h4>
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
-          <h6>Status: Applied</h6>
+          <h6>Status: Applied/Accepted</h6>
         </div>
       );
     }
