@@ -14,24 +14,27 @@ import { hover } from "@testing-library/user-event/dist/hover";
 const Login = () => {
   function Navbar() {
     const navigate = useNavigate()
-      return (
-        <nav className="navbar">
-           <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
-          <div className="navbar__container">
-            <ul className="navbar__links">
-              <li>
-                <Link to="/faculty"style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
-              </li>
-              <li>
-                <Link to="/research"style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
-              </li>
-              <li>
-                <Link to="/signup"style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      );
+    return (
+      <nav className="navbar">
+        <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+        <div className="navbar__container">
+          <ul className="navbar__links">
+            <li>
+              <Link to="/faculty" style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+            </li>
+            <li>
+              <Link to="/research" style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+            </li>
+            <li>
+              <Link to="/Login1" style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+            </li>
+            <li>
+              <Link to="/signup" style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    );
   }
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -103,51 +106,99 @@ const Login = () => {
   return (
     <>
       <body>
-        <div className="container">
-          <Navbar/>
-          <div className="login_navbar">
-            <nav>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={handleSubmit}>
-                <div className="form-inline">
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Control className="login_input"
-                      type="email"
-                      placeholder="Email address"
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formBasicPassword">
-                    <Form.Control className="login_input"
-                      type="password"
-                      placeholder="Password"
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </Form.Group>
-                  <GoogleButton
-                      className="g-btn"
-                      type="light"
-                      label="Login with Google"
-                      onClick={handleGoogleSignIn}
-                      />
-                  <Button variant="primary" type="Submit" className="LoginButton">
-                    Login
-                  </Button>
-                  
-                </div>
-              </Form>
-            </nav>
+        <div className="container_001">
+          <Navbar />
+          <div className="login_navbar1">
           </div>
-          <div className="row">
-            <div className="col-1">
-              <h2>Boost up your skills</h2>
-              <h3>with new ways of</h3>
-              <h4>learning</h4>
-              <Link to="/signup" className="Signup_link"> <button type="button" className="btn1">Apply</button></Link>
+        </div>
+        <div className="login_container">
+          <div className="login_reserch">
+            <h11 className="h11">
+              Research highligths
+            </h11>
+          </div>
+          <div className="services">
+            <div className="card">
+              <img src="images/login1_img.png" className="login_images"></img>
+              <p className="text_font">A Novel Multipath Mitigation Technique for GNSS Signals</p>
+              <div className="btn-box">
+                <div className="btn_box1">
+                  <button type="button" className="read_more">Read More</button>
+                </div>
+              </div>
             </div>
-            <div  style={{width : "40%",marginLeft:'-50px',marginTop:'-50px'}}>
-              <Lottie loop = {true} animationData = {study} className = "animation1"/>
+            <div className="card">
+              <img src="images/login2_1_img.jpg" className="login_images"></img>
+              <p className="text_font">Rajasthani Clay Catalytic Converters for Automobiles</p>
+              <div className="btn-box">
+                <div className="btn_box1">
+                  <button type="button" className="read_more">Read More</button>
+                </div>
+              </div>
             </div>
+            <div className="card">
+              <img src="images/login_imge3.jpg" className="login_images"></img>
+              <p className="text_font">Optical Field Design for Solar Thermal Applications</p>
+              <div className="btn-box">
+                <div className="btn_box1">
+                  <button type="button" className="read_more">Read More</button>
+                </div>
+              </div>
+            </div>
+            <div className="card">
+              <img src="images/login4_img.jpg" className="login_images"></img>
+              <p className="text_font">Language Independent Speech Generation System</p>
+              <div className="btn-box">
+                <div className="btn_box1">
+                  <button type="button" className="read_more">Read More</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="login_event">
+            <h11 className="h11">
+              Events
+            </h11>
+          </div>
+          <div className="events1">
+            <div className="card1">
+              <p className="text_font1">FMFP-2023 Workshop: 8th National Workshop on Research Methodologies in Fluid Mechanics </p>
+              <h className="text_font2">  12-15 July 2023</h>
+            </div>
+            <div className="card1">
+              <p className="text_font1">FMFP-2023 Conference: The 10th International and 50th (Golden Jubilee) National Conference on Fluid Mechanics and Fluid Power</p>
+              <h className="text_font2">  20-22 December 2023</h>
+            </div>
+            <div className="card1">
+              <button type="button" className="read_more">Read More</button>
+            </div>
+          </div>
+          <div className="login_event">
+            <h11 className="h11">
+              Announcements
+            </h11>
+          </div>
+          <div className="events1">
+            <div className="card1">
+              <p className="text_font3">1.	Request for Proposal for Design, Development and Maintenance of E-Commerce Platform for Jodhpur Craft Clusters.  </p>
+            </div>
+            <div className="card1">
+              <p className="text_font3">2.	Rolling Advertisement (IITJ/2023/Faculty Position/39; dated 1 March 2023)</p>
+            </div>
+            <div className="card1">
+              <p className="text_font3">3.	AKAM (Azadi ka Amrit Mahotsav) is an ongoing celebration to commemorate the 75 glorious years of a progressive independent india : Veer Baal Diwas</p>
+            </div>
+            <div className="card1">
+              <p className="text_font3">4.	Management Development Programme On Develop an Entrepreneurial mind-set for Business Growth</p>
+            </div>
+            <div className="card1">
+              <button type="button" className="read_more">Read More</button>
+            </div>
+          </div>
+          <div className="login_navbar_new">
+            <h11 className="h11">
+              Developed by: Shalin Jain & Yogesh Jangir
+            </h11>
           </div>
         </div>
       </body>

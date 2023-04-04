@@ -43,7 +43,7 @@ const Signup = () => {
               <Link to="/research"style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
             </li>
             <li>
-              <Link to="/"style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+              <Link to="/login1"style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
             </li>
             <li>
               <Link to="/signup"style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
