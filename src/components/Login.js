@@ -200,6 +200,12 @@ const Login = () => {
               Developed by: Shalin Jain & Yogesh Jangir
             </h11>
           </div>
+          <div className="row_new">
+            Research Highlights
+            <div className="col_new">
+
+            </div>
+          </div>
         </div>
       </body>
     </>
