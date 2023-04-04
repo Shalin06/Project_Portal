@@ -150,7 +150,7 @@ const Form = () => {
   return (
     <>
     <Form/>
-    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-750px' }}>
+    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-650px' }}>
           <Lottie loop={true} animationData={detail} className="animation2" />
     </div>
     </>

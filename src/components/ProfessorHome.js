@@ -166,13 +166,13 @@ function Navbar() {
       <>
         <Navbar />
         <MyProjects/>
-        <div style={{ width: "40%", marginLeft: '700px', marginTop: '50px' }}>
+        <div style={{ width: "40%", marginLeft: '820px', marginTop: '50px' }}>
           <Lottie loop={true} animationData={student1} className="animation2" />
         </div>
-        <div className="row3" >
+        <div className="row3">
         <div className="col5">
-              <h2 className="col6" style= {{marginTop: '50px' }}>Learning is a treasure that will</h2>
-              <h3 className="col6">follow its owner everywhere</h3>
+              <p className="col6">Learning is a treasure that will</p>
+              <p className="col6">follow its owner everywhere</p>
         </div>
         </div>
       </>

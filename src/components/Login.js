@@ -123,7 +123,7 @@ const Login = () => {
               <p className="text_font">A Novel Multipath Mitigation Technique for GNSS Signals</p>
               <div className="btn-box">
                 <div className="btn_box1">
-                  <button type="button" className="read_more">Read More</button>
+                  <Link to = "/reserch2"><button type="button" className="read_more">Read More</button></Link>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ const Login = () => {
               <p className="text_font">Rajasthani Clay Catalytic Converters for Automobiles</p>
               <div className="btn-box">
                 <div className="btn_box1">
-                  <button type="button" className="read_more">Read More</button>
+                <Link to = "/reserch3"><button type="button" className="read_more">Read More</button></Link>
                 </div>
               </div>
             </div>
@@ -141,7 +141,7 @@ const Login = () => {
               <p className="text_font">Optical Field Design for Solar Thermal Applications</p>
               <div className="btn-box">
                 <div className="btn_box1">
-                  <button type="button" className="read_more">Read More</button>
+                <Link to = "/reserch4"><button type="button" className="read_more">Read More</button></Link>
                 </div>
               </div>
             </div>
@@ -150,7 +150,7 @@ const Login = () => {
               <p className="text_font">Language Independent Speech Generation System</p>
               <div className="btn-box">
                 <div className="btn_box1">
-                  <button type="button" className="read_more">Read More</button>
+                <Link to = "/reserch5"><button type="button" className="read_more">Read More</button></Link>
                 </div>
               </div>
             </div>

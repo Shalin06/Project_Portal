@@ -31,25 +31,38 @@ body {
 
 }
 
-.form-inline {
+.form-inline01 {
 	display: flex;
-	flex-flow: row wrap;
-	align-items: center;
-	margin-left: 20px;
-	margin-top: -32px;
-	margin-right: 0px;
-	gap: 10px;
+	margin-top:5em;
+	margin-left: 60em;
+	flex-direction: column;
+	background: rgb(231, 235, 247);
+	width: 24%;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-top: 30px;
+	padding-bottom: 35px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Style the input fields */
-.login_input {
-	vertical-align: middle;
-	margin: .5rem;
-	margin-top: -1px;
-	background-color: #fff;
-	border: 1px solid #ccc8c8;
+.login_input01 {
+	margin-bottom: 20px;
 }
-
+.login_details{
+	margin-bottom: 20px;
+}
+.login_p{
+	font-size: 30px;
+	font-weight: 500;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	color: #080808;
+	margin-bottom: -1px;
+}
+.login_h{
+	font-size: 15px;
+	color: #9a9999;
+}
 /* Style the submit button */
 .LoginButton {
 	background-color: #3D2460;
@@ -57,11 +70,8 @@ body {
 	color: white;
 	cursor: pointer;
 	font-size: 15px;
-	margin-top: -10px;
-	margin-left: 10px;
-	width: 140px;
-	margin-right: -20px;
-	height: 37px;
+	margin-top:15px;
+	height: 40px;
 }
 
 .form-inline button:hover {
@@ -109,20 +119,26 @@ body {
 	margin-top: 10px;
 	border-radius: 5px;
 }
-
 .gbtn {
-	width: 5% !important;
-	height: 20% !important;
-	padding-left: 20pxc;
-	margin-left: 20px;
-	margin-left: 10px;
+	display: flex;
+	width: 100%;
+	max-width: 100vh;
+	border-radius: 10px;
+	padding-left: 10px;
+
+  }
+  
+.g-btn {
+	color: #2600fb;
 	border-radius: 5px;
-}
-
-.gbtn:hover {
-	color: #00eeff !important;
-}
-
+	font-size: 16px;
+	border: white;
+	outline: white;
+	font-weight: 300;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	cursor: pointer;
+  }
+  
 .col-2 {
 	position: relative;
 	flex-basis: 60%;
@@ -421,16 +437,17 @@ u1 l1 Link {
 	height: 2000px;
 }
 
-.col5 h2 {
-	margin-top: 330px;
+.col5{
+	margin-top: -330px;
 	margin-left: 100px;
 }
 
 .col6 {
-	font-size: 40px;
-	font-style: inherit;
+	font-size: 45px;
 	color: #3D2460;
-	font-weight: bold;
+	font-weight: 549;
+	margin-bottom: -12px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .show_form {
