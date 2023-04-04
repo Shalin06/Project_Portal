@@ -3,13 +3,12 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import {ref,set,off,onValue,child, get, update,} from "firebase/database";
+import {ref,set,off,onValue,child, get, update} from "firebase/database";
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
 // import {props}
 const ProfessorHome = () => {
-const [students , setStudents] = useState([])
 const [showList, setShowList] = useState(false)
 const navigate = useNavigate()
 const {logOut} = useUserAuth()
@@ -45,78 +44,68 @@ function Navbar() {
       </nav>
     );
   }
-  const handleAccept = (userid,projectid) => {
-    const studentref = ref(database,`Projects/${projectid}/Students/${userid}`)
-    const val = {
-      [userid]:"Accepted",
-    }
-    set(studentref,val)
+  function handleAccept (userid,projectid) {
+    const data_ref = ref(database, `Projects/${projectid}/Students`)
+    set(child(data_ref,`${userid}/status`),"Accepted")
+    const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
+    set(userProjectsRef, "Accepted");
+  }
+  function handleReject (userid,projectid) {
+    const data_ref = ref(database, `Projects/${projectid}/Students`)
+    set(child(data_ref,`${userid}/status`),"Rejected")
+    const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
+    set(userProjectsRef, "Rejected");
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
-    const [studentsforproj, setStudents] = useState([]);
+    const [students , setStudents] = useState([])
     const { user } = useUserAuth();
-  
     useEffect(() => {
       const projRef = ref(database, `users/${user.uid}/projects`);
-  
       onValue(projRef, (snapshot) => {
         const arr = [];
-  
         snapshot.forEach((ele) => {
           const newRef = ref(database, `Projects/${ele.key}`);
-  
           onValue(newRef, (snapshot2) => {
             arr.push({ ...snapshot2.val(), id: ele.key });
           });
         });
-  
         setProjectInfo(arr);
+        // console.log(arr)
+
       });
     }, [user]);
   
-    useEffect(() => {
-      if (projectInfo.length === 0) {
-        return;
+  function ProjectDetails({projectName,email,numStudents,profname,department,deadline,remark,projectid,Students}) 
+  {
+    if(typeof Students !== 'undefined'){
+      var arr = []
+      for (const [key, value] of Object.entries(Students)) {
+        onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
+            const nameee = snapshot.val()
+            arr.push({nameee,id:key})
+        })
       }
-  
-      projectInfo.forEach((project) => {
-        const projectId = project.projectid; 
-        const dataRef = ref(database, `Projects/${projectId}/Students`);
-        var studentUserNames = [];
+      console.log(arr)
+      const studs = arr.map((item) => 
+      <div key={item.id}>{item.nameee}
+      <button onClick={() => handleAccept(item.id,projectid)}>Accept</button>
+      <>or</><button onClick={() => handleReject(item.id,projectid)}>Reject</button>
+      </div>)
+      return (
+        <div className="project_detail">
+        <h1>Project: {projectName}</h1>
+        <h1>Professor: {profname}</h1>
+        <h2>Email: {email}</h2>
+        <h3>Number of Students: {numStudents}</h3>
+        <h4>Offered to: {department}</h4>
+        <h5>Deadline: {deadline}</h5>
+        <h6>Remark: {remark}</h6>
+        <h6>Students:{studs}</h6>
+        </div>
+    )
+    }else{
 
-        onValue(dataRef, (snapshot) => {
-          if (snapshot.exists()) {
-            const students = snapshot.val();
-            Object.keys(students).forEach((studentId) => {
-              if (students[studentId] === "Applied") {
-                const studentRef = ref(database, `users/${studentId}/UserName`);
-                get(studentRef).then((snapshot) => {
-                  if (snapshot.exists()) {
-                    const userName = snapshot.val();
-                    // console.log(userName)
-                    studentUserNames.push({userName,userid:studentId});
-                    // console.log(studentUserNames.length)
-                    setStudents(studentUserNames)
-                  }
-              });
-            }
-        });
-      }
-    });
-      });
-    }, [projectInfo]);
-  
-    function ProjectDetails({
-      projectName,
-      email,
-      numStudents,
-      profname,
-      department,
-      deadline,
-      remark,
-      projectid,
-    }) {
       return (
         <div className="project_detail">
           <h1>Project: {projectName}</h1>
@@ -126,20 +115,10 @@ function Navbar() {
           <h4>Offered to: {department}</h4>
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
-          {/* <ol> */}
-            
-            {/* {studentsforproj.map((student, index) => (
-              <div><li key={index}>{student.userName}</li>
-              <button onClick={handleAccept(student.userid,projectid)}>Accept</button> */}
-              {/* <button onClick={handleReject}>Reject</button> */
-              // console.log(student.userid)
-              }
-              {/* </div>
-            ))} */}
-          {/* </ol> */}
         </div>
       );
     }
+  }
   
     const handleButtonClick = () => {
       setShowList(!showList);

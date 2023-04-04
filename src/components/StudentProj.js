@@ -3,14 +3,14 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, set, get, onValue, update } from "firebase/database";
+import { ref, set, get, onValue, update,child } from "firebase/database";
 import { Link } from 'react-router-dom';
 const StudentProj = () => {
   const [showList, setShowList] = useState(false);
   const navigate = useNavigate()
   const { logOut, user } = useUserAuth()
   const [isVisible, setVisible] = useState(false)
-  const [isClicked, setIsClicked] = useState(false);
+  
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -52,7 +52,7 @@ const StudentProj = () => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
           onValue(userProjectsRef,(snapshot2) => {
             if(snapshot2.exists){
-              if(snapshot2.val() === "Applied"){
+              if(snapshot2.val() === "Applied" || snapshot2.val() === "Accepted"){
                  var x =  1
               }
               else{
@@ -87,8 +87,8 @@ const StudentProj = () => {
     );
   }
   function addthestudenttoproject(projectid) {
-    const data_ref = ref(database, `Projects/${projectid}/Students`)
-    update(data_ref, { [user.uid]: "Applied" })
+    const data_ref = ref(database, `Projects/${projectid}`)
+    update(child(data_ref,`Students/${user.uid}`),{ status: "Applied" })
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
     set(userProjectsRef, "Applied");
   }
@@ -108,7 +108,6 @@ const StudentProj = () => {
     }, [deadline])
     const handleapplyclick = () => {
       addthestudenttoproject(projectid)
-      setIsClicked(true);
       setVisible(false)
     }
     return (
@@ -128,56 +127,8 @@ const StudentProj = () => {
       </div>
     );
   }
-  const MyProjects = () => {
-    const [projectInfo, setProjectinfo] = useState([])
-    useEffect(() => {
-      const data_ref = ref(database, "Projects/")
-      var arr = []
-      onValue(data_ref, (snapshot) => {
-        snapshot.forEach(element => {
-          const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
-          onValue(userProjectsRef,(snapshot2) => {
-            if(snapshot2.exists){
-              if(snapshot2.val() === "Applied"){
-                 const newele = element.val()
-                 arr.push(newele)
-              }
-            }
-          })
-
-        });
-        setProjectinfo(arr)
-      })
-    }, [])
-    const handleButtonClick = () => {
-      setShowList(!showList);
-    };
-    function ProjectDetails({ email, numStudents, projectid, profname, department, deadline, remark }) {
-      useEffect(() => {
-        const currentdate = new Date()
-        const deadlinedate = new Date(deadline)
-        if (currentdate > deadlinedate) {
-          setVisible(false)
-        }
-        const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
-        onValue(userProjectsRef,(snapshot) => {
-          if(snapshot.val() === "Applied"){
-            setVisible(false)
-          }
-        })
-      }, [deadline])
-      return (
-        <div className="project_detail">
-          <h1>Professor: {profname}</h1>
-          <h2>Email: {email}</h2>
-          <h3>Number of Students: {numStudents}</h3>
-          <h4>Offered to: {department}</h4>
-          <h5>Deadline: {deadline}</h5>
-          <h6>Remark: {remark}</h6>
-        </div>
-      );
-    }
-  }
+  
+    
   return (
     <>
       <Navbar />
