@@ -1000,8 +1000,6 @@ u1 l1 Link {
 	font-weight: 500;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: #080808;
-	text-align: justify;
-	text-justify: inter-word;
 }
 .res2_img{
 	display: flex;
@@ -1034,7 +1032,7 @@ u1 l1 Link {
 	margin-bottom: 1em;
 }
 .accept_button{
-	width: 32%;
+	width: 50%;
 	margin-bottom: 10px;
 	padding: 10px 5px 10px 5px;
 	border-radius: 10px;
@@ -1047,8 +1045,9 @@ u1 l1 Link {
 	margin-right: 5px;
 }
 .reject_button{
-	width: 32%;
+	width: 65%;
 	padding: 10px 5px 10px 5px;
+	height: 45px;
 	border-radius: 10px;
 	background-color: #ff0000;
 	border: 1px solid #ddd;
@@ -1135,3 +1134,49 @@ u1 l1 Link {
 	background: none;
 	border: none;
 }
+.delete_css{
+	width: 50%;
+	padding: 10px 5px 10px 5px;
+	border-radius: 10px;
+	background-color:  #3D2460;
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	font-size: 15px;
+	margin-left: 5px;
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+  }
+  
+  th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+	background-color: #f2f2f2;
+  }
+  .projects-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+  }
+  
+  .projects-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+  }
+  
+  .projects-header h1 {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+  }
+	

@@ -113,7 +113,7 @@ const ProfessorHome = () => {
           const studsapp = arrapp.map((item) =>
             <div key={item.id}>{item.nameee}
               <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible}>Accept</button>
-              <>or</><button onClick={() => handleReject(item.id, projectid)} disabled={isVisible}>Reject</button>
+              <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible}>Reject</button>
             </div>)
           const studsacc = arracc.map((item) =>
             <div key={item.id}>{item.nameee}
@@ -132,8 +132,8 @@ const ProfessorHome = () => {
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <p className="profession_details">Students Applied:{studsapp}</p>
-                  <p className="profession_details">Students : {studsacc}</p>
-                  <button onClick={() => handleDelete(projectid)}>Delete</button>
+                  <p>Students : {studsacc}</p>
+                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -155,8 +155,8 @@ const ProfessorHome = () => {
                   <p className="profession_details">Deadline: {deadline}</p>
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
-                  <p className="profession_details">Students : {studsacc}</p>
-                  <button onClick={() => handleDelete(projectid)}>Delete</button>
+                  <p>Students : {studsacc}</p>
+                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -164,8 +164,10 @@ const ProfessorHome = () => {
         } else if (arracc.length == 0 && arrapp.length > 0) {
           const studsapp = arrapp.map((item) =>
             <div key={item.id}>{item.nameee}
+            <div style={{display: 'inline-flex'}}>
               <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible} className="accept_button">Accept</button>
-              <>or</><button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
+              <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
+            </div>
             </div>)
           return (
             <div className="bio_dept_img3">
@@ -181,9 +183,9 @@ const ProfessorHome = () => {
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <div className="accept_recect">
-                    <p className="profession_details">Students : {studsapp}</p>
+                    <p>Students : {studsapp}</p>
                   </div>
-                  <button onClick={() => handleDelete(projectid)}>Delete</button>
+                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -203,7 +205,7 @@ const ProfessorHome = () => {
                   <p className="profession_details">Deadline: {deadline}</p>
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
-                  <button onClick={() => handleDelete(projectid)}>Delete</button>
+                  <button onClick={() => handleDelete(projectid) } className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -223,7 +225,7 @@ const ProfessorHome = () => {
                 <p className="profession_details">Offered to: {department}</p>
                 <p className="profession_details">Deadline: {deadline}</p>
                 <p className="profession_details">Remark: {remark}</p>
-                <button onClick={() => handleDelete(projectid)}>Delete</button>
+                <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
               </div>
             </div>
           </div>

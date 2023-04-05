@@ -150,7 +150,7 @@ const StudentHome = () => {
         {showAccList && (
           <div>
             {projectInfoAcc.map((project, index) => (
-              <ProjectDetailsApp key={index} {...project} />
+              <ProjectDetailsAcc key={index} {...project} />
             ))}
           </div>
         )}
