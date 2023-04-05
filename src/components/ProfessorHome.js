@@ -3,12 +3,17 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
+<<<<<<< HEAD
 import { ref, set, off, onValue, child, get, update } from "firebase/database";
+=======
+import {ref,set,off,onValue,child, get, update,remove} from "firebase/database";
+>>>>>>> 8f0f977ed02572eee5e124c4b012a94d9b46ccb5
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
 // import {props}
 const ProfessorHome = () => {
+<<<<<<< HEAD
   const [showList, setShowList] = useState(false)
   const [isVisible, setVisible] = useState(false)
   const navigate = useNavigate()
@@ -18,6 +23,17 @@ const ProfessorHome = () => {
     navigate("/")
   }
   function Navbar() {
+=======
+const [showList, setShowList] = useState(false)
+const [isVisible,setVisible] = useState(false)
+const navigate = useNavigate()
+const {user,logOut} = useUserAuth()
+const handleLogout = async(e) =>{
+  await logOut()
+  navigate("/")
+}
+function Navbar() {
+>>>>>>> 8f0f977ed02572eee5e124c4b012a94d9b46ccb5
     return (
       <nav className="navbar">
         <img src="images/logo323.png" className="logo2" />
@@ -65,6 +81,12 @@ const ProfessorHome = () => {
     set(userProjectsRef, "Rejected");
     setVisible(true)
   }
+  function handleDelete(projectid){
+    const data_ref = ref(database, `Projects/${projectid}`)
+    remove(data_ref)
+    const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
+    remove(userProjectsRef)
+  }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
     const [studentsApplied, setStudentsApplied] = useState([])
@@ -82,6 +104,7 @@ const ProfessorHome = () => {
         setProjectInfo(arr);
       });
     }, [user]);
+<<<<<<< HEAD
 
     function ProjectDetails({ projectName, email, numStudents, profname, department, deadline, remark, projectid, Students, vacancy }) {
       if (typeof Students !== 'undefined') {
@@ -218,6 +241,122 @@ const ProfessorHome = () => {
           </div>
         );
       }
+=======
+  
+  function ProjectDetails({projectName,email,numStudents,profname,department,deadline,remark,projectid,Students,vacancy}) 
+  {
+    if(typeof Students !== 'undefined'){
+      var arrapp = []
+      var arracc = []
+      for (const [key, value] of Object.entries(Students)) {
+        onValue(ref(database,`Projects/${projectid}/Students/${key}/status`),(ele) => {
+          if(ele.val() === "Applied"){
+            onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
+                const nameee = snapshot.val()
+                arrapp.push({nameee,id:key})
+            })
+          }
+          else if(ele.val() === "Accepted"){
+            onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
+                const nameee = snapshot.val()
+                arracc.push({nameee,id:key})
+            })
+          }
+        })
+      }
+      if(arrapp.length > 0 && arracc.length > 0){
+        const studsapp = arrapp.map((item) => 
+        <div key={item.id}>{item.nameee}
+        <button onClick={() => handleAccept(item.id,projectid)} disabled={isVisible}>Accept</button>
+        <>or</><button onClick={() => handleReject(item.id,projectid)} disabled={isVisible}>Reject</button>
+        </div>)
+        const studsacc = arracc.map((item) => 
+        <div key={item.id}>{item.nameee}
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students Applied:{studsapp}</h6>
+          <h6>Students : {studsacc}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
+          </div>
+      )
+      }else if(arracc.length > 0 && arrapp.length == 0){
+        const studsacc = arracc.map((item) => 
+        <div key={item.id}>{item.nameee}
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students : {studsacc}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
+          </div>
+      )
+      }else if(arracc.length == 0 && arrapp.length > 0){
+        const studsapp = arrapp.map((item) => 
+        <div key={item.id}>{item.nameee}
+        <button onClick={() => handleAccept(item.id,projectid)} disabled={isVisible}>Accept</button>
+        <>or</><button onClick={() => handleReject(item.id,projectid)} disabled={isVisible}>Reject</button>
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students : {studsapp}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
+          </div>
+      )
+      }
+      else{
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
+          </div>
+      )
+      }
+    }else{
+
+      return (
+        <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
+        </div>
+      );
+>>>>>>> 8f0f977ed02572eee5e124c4b012a94d9b46ccb5
     }
 
     const handleButtonClick = () => {

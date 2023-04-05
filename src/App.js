@@ -74,12 +74,9 @@ function App() {
                 </ProtectedRoute>
                 }
               />
-              <Route path="/" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login1" element={<Login1/>}/>
-            </Routes>
-          </UserAuthContextProvider>
-          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login1" element={<Login1/>}/>
             <Route path="/research" element={<Research />} />
             <Route path="/faculty" element={<Faculty />} />
             <Route path="/bio" element={<Bio/>}/>
@@ -99,6 +96,7 @@ function App() {
             <Route path="/event" element={<Event/>}/>
             <Route path="/annoucment" element={<Announcment/>}/>
           </Routes>
+          </UserAuthContextProvider>
     </>
   );
 }
