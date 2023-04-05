@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import {ref,set,off,onValue,child, get, update} from "firebase/database";
+import {ref,set,off,onValue,child, get, update,remove} from "firebase/database";
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
@@ -12,7 +12,7 @@ const ProfessorHome = () => {
 const [showList, setShowList] = useState(false)
 const [isVisible,setVisible] = useState(false)
 const navigate = useNavigate()
-const {logOut} = useUserAuth()
+const {user,logOut} = useUserAuth()
 const handleLogout = async(e) =>{
   await logOut()
   navigate("/")
@@ -64,6 +64,12 @@ function Navbar() {
     const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
     set(userProjectsRef, "Rejected");
     setVisible(true)
+  }
+  function handleDelete(projectid){
+    const data_ref = ref(database, `Projects/${projectid}`)
+    remove(data_ref)
+    const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
+    remove(userProjectsRef)
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
@@ -125,6 +131,7 @@ function Navbar() {
           <h6>Vacancy : {vacancy}</h6>
           <h6>Students Applied:{studsapp}</h6>
           <h6>Students : {studsacc}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
           </div>
       )
       }else if(arracc.length > 0 && arrapp.length == 0){
@@ -142,6 +149,7 @@ function Navbar() {
           <h6>Remark: {remark}</h6>
           <h6>Vacancy : {vacancy}</h6>
           <h6>Students : {studsacc}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
           </div>
       )
       }else if(arracc.length == 0 && arrapp.length > 0){
@@ -161,6 +169,7 @@ function Navbar() {
           <h6>Remark: {remark}</h6>
           <h6>Vacancy : {vacancy}</h6>
           <h6>Students : {studsapp}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
           </div>
       )
       }
@@ -175,6 +184,7 @@ function Navbar() {
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
           <h6>Vacancy : {vacancy}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
           </div>
       )
       }
@@ -189,6 +199,7 @@ function Navbar() {
           <h4>Offered to: {department}</h4>
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
+          <button onClick={() => handleDelete(projectid)}> Delete </button>
         </div>
       );
     }
