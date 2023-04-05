@@ -135,17 +135,16 @@ const Login1 = () => {
                                             onChange={(e) => setPassword(e.target.value)}
                                         />
                                     </Form.Group>
-                                    <div className="gbtn">
-                                    <GoogleButton
-                                        className="g-btn"
-                                        type="light"
+                                    <Button variant="primary" type="Submit" className="LoginButton">
+                                        Login
+                                    </Button>
+                                    <div  style={{alignItems:"center"}}>
+                                    <GoogleButton   
+                                        type="dark"
                                         label="Sign in with Google"
                                         onClick={handleGoogleSignIn}
                                     />
                                     </div>
-                                    <Button variant="primary" type="Submit" className="LoginButton">
-                                        Login
-                                    </Button>
                                 </div>
                             </Form>
                         </nav>

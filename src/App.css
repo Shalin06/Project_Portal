@@ -140,10 +140,10 @@ body {
 	max-width: 100vh;
 	border-radius: 10px;
 	padding-left: 10px;
-
+	margin-top:10px ;
   }
   
-.g-btn {
+.gbtn {
 	color: #2600fb;
 	border-radius: 5px;
 	font-size: 16px;
@@ -601,6 +601,14 @@ u1 l1 Link {
 }
 
 .a1 {
+	color: rgb(0, 0, 0);
+	cursor: pointer;
+	font-size: 15px;
+	display: flex;
+	background: none;
+	border: none;
+}
+.a2 {
 	color: rgb(0, 0, 0);
 	cursor: pointer;
 	font-size: 15px;

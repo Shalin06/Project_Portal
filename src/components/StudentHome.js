@@ -11,7 +11,8 @@ const StudentHome = () => {
   const navigate = useNavigate()
   const { logOut } = useUserAuth()
   const [items, setItems] = useState([])
-  const [showList, setShowList] = useState(false);
+  const [showAccList, setAccShowList] = useState(false);
+  const [showAppList, setAppShowList] = useState(false);
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -45,7 +46,8 @@ const StudentHome = () => {
     );
   }
   const MyProjects = () => {
-    const [projectInfo, setProjectinfo] = useState([])
+    const [projectInfoApp, setProjectinfoApp] = useState([])
+    const [projectInfoAcc, setProjectinfoAcc] = useState([])
     const {user} =useUserAuth()
     useEffect(() => {
       const data_ref = ref(database, "Projects/")
@@ -55,7 +57,7 @@ const StudentHome = () => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
           onValue(userProjectsRef,(snapshot2) => {
             if(snapshot2.exists){
-              if(snapshot2.val() === "Applied" || snapshot2.val() === "Accepted"){
+              if(snapshot2.val() === "Applied"){
                  const newele = element.val()
                  arr.push(newele)
               }
@@ -63,13 +65,32 @@ const StudentHome = () => {
           })
 
         });
-        setProjectinfo(arr)
+        setProjectinfoApp(arr)
+      })
+      arr = []
+      onValue(data_ref, (snapshot) => {
+        snapshot.forEach(element => {
+          const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
+          onValue(userProjectsRef,(snapshot2) => {
+            if(snapshot2.exists){
+              if(snapshot2.val() === "Accepted"){
+                 const newele = element.val()
+                 arr.push(newele)
+              }
+            }
+          })
+
+        });
+        setProjectinfoAcc(arr)
       })
     }, [])
-    const handleButtonClick = () => {
-      setShowList(!showList);
+    const handleButtonClickApp = () => {
+      setAppShowList(!showAppList);
     };
-    function ProjectDetails({ projectName,email, numStudents, projectid, profname, department, deadline, remark }) {
+    const handleButtonClickAcc = () => {
+      setAccShowList(!showAccList);
+    };
+    function ProjectDetailsApp({ projectName,email, numStudents, vacancy,projectid, profname, department, deadline, remark }) {
       return (
         <div className="project_detail">
           <h1>Project: {projectName}</h1>
@@ -79,7 +100,23 @@ const StudentHome = () => {
           <h4>Offered to: {department}</h4>
           <h5>Deadline: {deadline}</h5>
           <h6>Remark: {remark}</h6>
-          <h6>Status: Applied/Accepted</h6>
+          <h6>Vacancy: {vacancy}</h6>
+          <h6>Status: Applied</h6>
+        </div>
+      );
+    }
+    function ProjectDetailsAcc({ projectName,email, numStudents, projectid, profname, department, deadline, remark,vacancy }) {
+      return (
+        <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy: {vacancy}</h6>
+          <h6>Status: Accepted</h6>
         </div>
       );
     }
@@ -87,12 +124,23 @@ const StudentHome = () => {
       <div classname = "availabel_button">
         <div className="availabel_click">
         <button className="a1"
-        onClick={handleButtonClick} >{showList ? 'Hide My Projects' : 'Show My Projects'} </button>
+        onClick={handleButtonClickApp} >{showAppList ? 'Hide Applied Projects' : 'Show Applied Projects'} </button>
         </div>
-        {showList && (
+        {showAppList && (
           <div>
-            {projectInfo.map((project, index) => (
-              <ProjectDetails key={index} {...project} />
+            {projectInfoApp.map((project, index) => (
+              <ProjectDetailsApp key={index} {...project} />
+            ))}
+          </div>
+        )}
+        <div className="availabel_click">
+        <button className="a2"
+        onClick={handleButtonClickAcc} >{showAccList ? 'Hide Accepted Projects' : 'Show Accepted Projects'} </button>
+        </div>
+        {showAccList && (
+          <div>
+            {projectInfoAcc.map((project, index) => (
+              <ProjectDetailsApp key={index} {...project} />
             ))}
           </div>
         )}

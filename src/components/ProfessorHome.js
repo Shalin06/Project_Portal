@@ -10,6 +10,7 @@ import Lottie from "lottie-react"
 // import {props}
 const ProfessorHome = () => {
 const [showList, setShowList] = useState(false)
+const [isVisible,setVisible] = useState(false)
 const navigate = useNavigate()
 const {logOut} = useUserAuth()
 const handleLogout = async(e) =>{
@@ -49,16 +50,24 @@ function Navbar() {
     set(child(data_ref,`${userid}/status`),"Accepted")
     const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
     set(userProjectsRef, "Accepted");
+    const vacref = ref(database,`Projects/${projectid}/vacancy`)
+    var val = 0
+    onValue(vacref,(snapshot) => {
+      val = parseInt(snapshot.val())
+    })
+    set(vacref,val-1)
+    setVisible(true)
   }
   function handleReject (userid,projectid) {
     const data_ref = ref(database, `Projects/${projectid}/Students`)
     set(child(data_ref,`${userid}/status`),"Rejected")
     const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
     set(userProjectsRef, "Rejected");
+    setVisible(true)
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
-    const [students , setStudents] = useState([])
+    const [studentsApplied , setStudentsApplied] = useState([])
     const { user } = useUserAuth();
     useEffect(() => {
       const projRef = ref(database, `users/${user.uid}/projects`);
@@ -71,39 +80,104 @@ function Navbar() {
           });
         });
         setProjectInfo(arr);
-        // console.log(arr)
-
       });
     }, [user]);
   
-  function ProjectDetails({projectName,email,numStudents,profname,department,deadline,remark,projectid,Students}) 
+  function ProjectDetails({projectName,email,numStudents,profname,department,deadline,remark,projectid,Students,vacancy}) 
   {
     if(typeof Students !== 'undefined'){
-      var arr = []
+      var arrapp = []
+      var arracc = []
       for (const [key, value] of Object.entries(Students)) {
-        onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
-            const nameee = snapshot.val()
-            arr.push({nameee,id:key})
+        onValue(ref(database,`Projects/${projectid}/Students/${key}/status`),(ele) => {
+          if(ele.val() === "Applied"){
+            onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
+                const nameee = snapshot.val()
+                arrapp.push({nameee,id:key})
+            })
+          }
+          else if(ele.val() === "Accepted"){
+            onValue(ref(database,`users/${key}/UserName`),(snapshot) =>{
+                const nameee = snapshot.val()
+                arracc.push({nameee,id:key})
+            })
+          }
         })
       }
-      console.log(arr)
-      const studs = arr.map((item) => 
-      <div key={item.id}>{item.nameee}
-      <button onClick={() => handleAccept(item.id,projectid)}>Accept</button>
-      <>or</><button onClick={() => handleReject(item.id,projectid)}>Reject</button>
-      </div>)
-      return (
-        <div className="project_detail">
-        <h1>Project: {projectName}</h1>
-        <h1>Professor: {profname}</h1>
-        <h2>Email: {email}</h2>
-        <h3>Number of Students: {numStudents}</h3>
-        <h4>Offered to: {department}</h4>
-        <h5>Deadline: {deadline}</h5>
-        <h6>Remark: {remark}</h6>
-        <h6>Students:{studs}</h6>
-        </div>
-    )
+      if(arrapp.length > 0 && arracc.length > 0){
+        const studsapp = arrapp.map((item) => 
+        <div key={item.id}>{item.nameee}
+        <button onClick={() => handleAccept(item.id,projectid)} disabled={isVisible}>Accept</button>
+        <>or</><button onClick={() => handleReject(item.id,projectid)} disabled={isVisible}>Reject</button>
+        </div>)
+        const studsacc = arracc.map((item) => 
+        <div key={item.id}>{item.nameee}
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students Applied:{studsapp}</h6>
+          <h6>Students : {studsacc}</h6>
+          </div>
+      )
+      }else if(arracc.length > 0 && arrapp.length == 0){
+        const studsacc = arracc.map((item) => 
+        <div key={item.id}>{item.nameee}
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students : {studsacc}</h6>
+          </div>
+      )
+      }else if(arracc.length == 0 && arrapp.length > 0){
+        const studsapp = arrapp.map((item) => 
+        <div key={item.id}>{item.nameee}
+        <button onClick={() => handleAccept(item.id,projectid)} disabled={isVisible}>Accept</button>
+        <>or</><button onClick={() => handleReject(item.id,projectid)} disabled={isVisible}>Reject</button>
+        </div>)
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          <h6>Students : {studsapp}</h6>
+          </div>
+      )
+      }
+      else{
+        return (
+          <div className="project_detail">
+          <h1>Project: {projectName}</h1>
+          <h1>Professor: {profname}</h1>
+          <h2>Email: {email}</h2>
+          <h3>Number of Students: {numStudents}</h3>
+          <h4>Offered to: {department}</h4>
+          <h5>Deadline: {deadline}</h5>
+          <h6>Remark: {remark}</h6>
+          <h6>Vacancy : {vacancy}</h6>
+          </div>
+      )
+      }
     }else{
 
       return (
