@@ -3,14 +3,14 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, set, get, onValue, update,child } from "firebase/database";
+import { ref, set, get, onValue, update, child } from "firebase/database";
 import { Link } from 'react-router-dom';
 const StudentProj = () => {
   const [showList, setShowList] = useState(false);
   const navigate = useNavigate()
   const { logOut, user } = useUserAuth()
   const [isVisible, setVisible] = useState(false)
-  
+
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -50,12 +50,12 @@ const StudentProj = () => {
       onValue(data_ref, (snapshot) => {
         snapshot.forEach(element => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
-          onValue(userProjectsRef,(snapshot2) => {
-            if(snapshot2.exists){
-              if(snapshot2.val() === "Applied" || snapshot2.val() === "Accepted"){
-                 var x =  1
+          onValue(userProjectsRef, (snapshot2) => {
+            if (snapshot2.exists) {
+              if (snapshot2.val() === "Applied" || snapshot2.val() === "Accepted") {
+                var x = 1
               }
-              else{
+              else {
                 const newele = element.val()
                 arr.push(newele)
               }
@@ -71,10 +71,10 @@ const StudentProj = () => {
     };
 
     return (
-      <div classname = "availabel_button">
+      <div classname="availabel_button">
         <div className="availabel_click">
-        <button className="a1"
-        onClick={handleButtonClick} >{showList ? 'Hide Available Projects' : 'Show Available Projects'} </button>
+          <button className="a1"
+            onClick={handleButtonClick} >{showList ? 'Hide Available Projects' : 'Show Available Projects'} </button>
         </div>
         {showList && (
           <div>
@@ -88,11 +88,11 @@ const StudentProj = () => {
   }
   function addthestudenttoproject(projectid) {
     const data_ref = ref(database, `Projects/${projectid}`)
-    update(child(data_ref,`Students/${user.uid}`),{ status: "Applied" })
+    update(child(data_ref, `Students/${user.uid}`), { status: "Applied" })
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
     set(userProjectsRef, "Applied");
   }
-  function ProjectDetails({ projectName,email, numStudents, projectid, profname, department, deadline, remark }) {
+  function ProjectDetails({ projectName, email, numStudents, projectid, profname, department, deadline, remark }) {
     useEffect(() => {
       const currentdate = new Date()
       const deadlinedate = new Date(deadline)
@@ -100,8 +100,8 @@ const StudentProj = () => {
         setVisible(false)
       }
       const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
-      onValue(userProjectsRef,(snapshot) => {
-        if(snapshot.val() === "Applied"){
+      onValue(userProjectsRef, (snapshot) => {
+        if (snapshot.val() === "Applied") {
           setVisible(false)
         }
       })
@@ -111,24 +111,29 @@ const StudentProj = () => {
       setVisible(false)
     }
     return (
-      <div className="project_detail">
-        <h1>Project: {projectName}</h1>
-        <h1>Professor: {profname}</h1>
-        <h2>Email: {email}</h2>
-        <h3>Number of Students: {numStudents}</h3>
-        <h4>Offered to: {department}</h4>
-        <h5>Deadline: {deadline}</h5>
-        <h6>Remark: {remark}</h6>
+      <div className="bio_dept_img4">
+        <div className="bio_dept4">
+          <img src="images/student.png" className="bio_img"></img>
+          <div className="title_bio4">
+            <p className="faculty_name">Project: {projectName}</p>
+            <p className="profession_details">Professor: {profname}</p>
+            <p className="profession_details">Email: {email}</p>
+            <p className="profession_details">Number of Students: {numStudents}</p>
+            <p className="profession_details">Offered to: {department}</p>
+            <p className="profession_details">Deadline: {deadline}</p>
+            <p className="profession_details">Remark: {remark}</p>
         {(
           <button className="apply_button" onClick={handleapplyclick} disabled={isVisible}>
             Apply
           </button>
         )}
       </div>
+      </div>
+        </div>
     );
   }
-  
-    
+
+
   return (
     <>
       <Navbar />

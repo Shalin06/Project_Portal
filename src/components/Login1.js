@@ -138,9 +138,9 @@ const Login1 = () => {
                                     <Button variant="primary" type="Submit" className="LoginButton">
                                         Login
                                     </Button>
-                                    <div  style={{alignItems:"center"}}>
+                                    <div  style={{alignItems:"center",marginTop:"20px",width:"40%"}}>
                                     <GoogleButton   
-                                        type="dark"
+                                        type=""
                                         label="Sign in with Google"
                                         onClick={handleGoogleSignIn}
                                     />

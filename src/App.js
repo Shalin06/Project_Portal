@@ -27,6 +27,8 @@ import Research2 from "./components/reserch2"
 import Research3 from "./components/reserch3"
 import Research4 from "./components/reserch4"
 import Research5 from "./components/reserch5"
+import Announcment from "./components/annoucment"
+import Event from "./components/event"
 function App() {
   return (
     <>
@@ -89,12 +91,13 @@ function App() {
             <Route path="/libral_arts" element={<Arts/>}/>
             <Route path="/math" element={<Math/>}/>
             <Route path="/meterial" element={<Material/>}/>
-            
             <Route path="/reserch1" element={<Research1/>}/>
             <Route path="/reserch2" element={<Research2/>}/>
             <Route path="/reserch3" element={<Research3/>}/>
             <Route path="/reserch4" element={<Research4/>}/>
             <Route path="/reserch5" element={<Research5/>}/>
+            <Route path="/event" element={<Event/>}/>
+            <Route path="/annoucment" element={<Announcment/>}/>
           </Routes>
     </>
   );

@@ -170,7 +170,7 @@ const Login = () => {
               <h className="text_font2">  20-22 December 2023</h>
             </div>
             <div className="card1">
-              <button type="button" className="read_more">Read More</button>
+            <Link to = "/event"><button type="button" className="read_more">Read More</button></Link>
             </div>
           </div>
           <div className="login_event">
@@ -192,19 +192,13 @@ const Login = () => {
               <p className="text_font3">4.	Management Development Programme On Develop an Entrepreneurial mind-set for Business Growth</p>
             </div>
             <div className="card1">
-              <button type="button" className="read_more">Read More</button>
+            <Link to = "/annoucment"><button type="button" className="read_more">Read More</button></Link>
             </div>
           </div>
           <div className="login_navbar_new">
             <h11 className="h11">
-              Developed by: Shalin Jain & Yogesh Jangir
+              INDIAN INSTITUTE OF TECHNOLOGY JODHPUR
             </h11>
-          </div>
-          <div className="row_new">
-            Research Highlights
-            <div className="col_new">
-
-            </div>
           </div>
         </div>
       </body>

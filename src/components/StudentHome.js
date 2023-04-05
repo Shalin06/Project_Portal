@@ -37,29 +37,29 @@ const StudentHome = () => {
               <Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link>
             </li>
             <li>
-            <Button onClick={handleLogout} className = "logout"> Log out</Button>
+              <Button onClick={handleLogout} className="logout"> Log out</Button>
             </li>
           </ul>
         </div>
-        
+
       </nav>
     );
   }
   const MyProjects = () => {
     const [projectInfoApp, setProjectinfoApp] = useState([])
     const [projectInfoAcc, setProjectinfoAcc] = useState([])
-    const {user} =useUserAuth()
+    const { user } = useUserAuth()
     useEffect(() => {
       const data_ref = ref(database, "Projects/")
       var arr = []
       onValue(data_ref, (snapshot) => {
         snapshot.forEach(element => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
-          onValue(userProjectsRef,(snapshot2) => {
-            if(snapshot2.exists){
-              if(snapshot2.val() === "Applied"){
-                 const newele = element.val()
-                 arr.push(newele)
+          onValue(userProjectsRef, (snapshot2) => {
+            if (snapshot2.exists) {
+              if (snapshot2.val() === "Applied") {
+                const newele = element.val()
+                arr.push(newele)
               }
             }
           })
@@ -71,11 +71,11 @@ const StudentHome = () => {
       onValue(data_ref, (snapshot) => {
         snapshot.forEach(element => {
           const userProjectsRef = ref(database, `users/${user.uid}/projects/${element.key}`);
-          onValue(userProjectsRef,(snapshot2) => {
-            if(snapshot2.exists){
-              if(snapshot2.val() === "Accepted"){
-                 const newele = element.val()
-                 arr.push(newele)
+          onValue(userProjectsRef, (snapshot2) => {
+            if (snapshot2.exists) {
+              if (snapshot2.val() === "Accepted") {
+                const newele = element.val()
+                arr.push(newele)
               }
             }
           })
@@ -90,41 +90,51 @@ const StudentHome = () => {
     const handleButtonClickAcc = () => {
       setAccShowList(!showAccList);
     };
-    function ProjectDetailsApp({ projectName,email, numStudents, vacancy,projectid, profname, department, deadline, remark }) {
+    function ProjectDetailsApp({ projectName, email, numStudents, vacancy, projectid, profname, department, deadline, remark }) {
       return (
-        <div className="project_detail">
-          <h1>Project: {projectName}</h1>
-          <h1>Professor: {profname}</h1>
-          <h2>Email: {email}</h2>
-          <h3>Number of Students: {numStudents}</h3>
-          <h4>Offered to: {department}</h4>
-          <h5>Deadline: {deadline}</h5>
-          <h6>Remark: {remark}</h6>
-          <h6>Vacancy: {vacancy}</h6>
-          <h6>Status: Applied</h6>
+        <div className="bio_dept_img4">
+          <div className="bio_dept4">
+            <img src="images/student.png" className="bio_img"></img>
+            <div className="title_bio4">
+              <p className="faculty_name">Project: {projectName}</p>
+              <p className="profession_details">Professor: {profname}</p>
+              <p className="profession_details">Email: {email}</p>
+              <p className="profession_details">Number of Students: {numStudents}</p>
+              <p className="profession_details">Offered to: {department}</p>
+              <p className="profession_details">Deadline: {deadline}</p>
+              <p className="profession_details">Remark: {remark}</p>
+              <p className="profession_details">Vacancy: {vacancy}</p>
+              <p className="profession_details">Status: Applied</p>
+            </div>
+          </div>
         </div>
       );
     }
-    function ProjectDetailsAcc({ projectName,email, numStudents, projectid, profname, department, deadline, remark,vacancy }) {
+    function ProjectDetailsAcc({ projectName, email, numStudents, projectid, profname, department, deadline, remark, vacancy }) {
       return (
-        <div className="project_detail">
-          <h1>Project: {projectName}</h1>
-          <h1>Professor: {profname}</h1>
-          <h2>Email: {email}</h2>
-          <h3>Number of Students: {numStudents}</h3>
-          <h4>Offered to: {department}</h4>
-          <h5>Deadline: {deadline}</h5>
-          <h6>Remark: {remark}</h6>
-          <h6>Vacancy: {vacancy}</h6>
-          <h6>Status: Accepted</h6>
+        <div className="bio_dept_img4">
+          <div className="bio_dept4">
+            <img src="images/avatar.png" className="bio_img"></img>
+            <div className="title_bio4">
+              <p className="faculty_name">Project: {projectName}</p>
+              <p className="profession_details">Professor: {profname}</p>
+              <p className="profession_details">Email: {email}</p>
+              <p className="profession_details">Number of Students: {numStudents}</p>
+              <p className="profession_details">Offered to: {department}</p>
+              <p className="profession_details">Deadline: {deadline}</p>
+              <p className="profession_details">Remark: {remark}</p>
+              <p className="profession_details">Vacancy: {vacancy}</p>
+              <p className="profession_details">Status: Accepted</p>
+            </div>
+          </div>
         </div>
       );
     }
     return (
-      <div classname = "availabel_button">
+      <div classname="availabel_button">
         <div className="availabel_click">
-        <button className="a1"
-        onClick={handleButtonClickApp} >{showAppList ? 'Hide Applied Projects' : 'Show Applied Projects'} </button>
+          <button className="a1"
+            onClick={handleButtonClickApp} >{showAppList ? 'Hide Applied Projects' : 'Show Applied Projects'} </button>
         </div>
         {showAppList && (
           <div>
@@ -133,9 +143,9 @@ const StudentHome = () => {
             ))}
           </div>
         )}
-        <div className="availabel_click">
-        <button className="a2"
-        onClick={handleButtonClickAcc} >{showAccList ? 'Hide Accepted Projects' : 'Show Accepted Projects'} </button>
+        <div className="availabel_click1">
+          <button className="a3"
+            onClick={handleButtonClickAcc} >{showAccList ? 'Hide Accepted Projects' : 'Show Accepted Projects'} </button>
         </div>
         {showAccList && (
           <div>
@@ -152,17 +162,17 @@ const StudentHome = () => {
   return (
     <>
       <Navbar />
-      <MyProjects/>
+      <MyProjects />
       {/* <img src = "images/631.jpg" className="logo4" width = "900"/> */}
-        <div style={{ width: "40%", marginLeft: '820px', marginTop: '100px' }}>
-          <Lottie loop={true} animationData={student} classname="animation2" />
-        </div>
-        <div className="row3">
+      <div style={{ width: "40%", marginLeft: '820px', marginTop: '100px' }}>
+        <Lottie loop={true} animationData={student} classname="animation2" />
+      </div>
+      <div className="row3">
         <div className="col5">
-              <p className="col6">Learning is a treasure that will</p>
-              <p className="col6">follow its owner everywhere</p>
+          <p className="col6">Learning is a treasure that will</p>
+          <p className="col6">follow its owner everywhere</p>
         </div>
-        </div>
+      </div>
     </>
   );
 };

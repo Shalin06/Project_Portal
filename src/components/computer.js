@@ -298,7 +298,13 @@ const CS = () => {
             </div>
           </div>
         </div>
-
+        <div className="bio_container">
+          <div className="bio_reserch">
+            <h11 className="bio_h11">
+              Indian Institute Of Technology Jodhpur
+            </h11>
+          </div>
+          </div>
       </div>
     </body>
   );
