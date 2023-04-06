@@ -1,19 +1,13 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
-import GoogleButton from "react-google-button";
-import { useUserAuth } from "../context/UserAuthContext";
+import React,{useEffect,useState} from "react";
+import { Link} from "react-router-dom";
 import { database } from "../firebase";
 import { ref, onValue } from "firebase/database";
-import { auth } from "../firebase";
-import study from './study.json';
-import Lottie from "lottie-react"
-import { hover } from "@testing-library/user-event/dist/hover";
+import Table from './Table';
+import Lottie from 'lottie-react';
+import animationData from './98612-work-hard.json';
 
 const Login = () => {
   function Navbar() {
-    const navigate = useNavigate()
     return (
       <nav className="navbar">
         <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
@@ -36,78 +30,36 @@ const Login = () => {
       </nav>
     );
   }
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const { logIn, googleSignIn } = useUserAuth();
-  const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await logIn(email, password);
-      const user = auth.currentUser;
-      if (user) {
-        const data_ref = ref(database, "users/" + user.uid);
-        onValue(data_ref, (snapshot) => {
-          if (snapshot.exists()) {
-            if (snapshot.val().Profession === "Student") {
-              navigate("/studenthome");
-            }
-            else if (snapshot.val().Profession === "Professor") {
-              navigate("/profhome")
-            }
-            else {
-              navigate("/details");
-            }
-          }
-          else {
-            navigate("/details");
-          }
+  const Projects = () => {
+    const [projectData, setProjectData] = useState([]);
+  
+    useEffect(() => {
+      const projectsRef = ref(database, "Projects");
+      onValue(projectsRef, (snapshot) => {
+        const projects = [];
+        snapshot.forEach((ele) => {
+          projects.push(ele.val());
         });
-      } else {
-        // handle case where user is null or undefined
-        console.log("User is null or undefined");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+        const newArr = projects.map(({ Students, profid, projectid, ...rest }) => rest);
+        setProjectData(newArr);
+      });
+    }, []);
+  
+      return (
+        <div className="projects-container" style={{textAlign:'center'}}>
+          <h1>Projects Available</h1>
+          <div className="projects-header">
+          </div>
+          <Table data={projectData} />
+        </div>
+      );
   };
-
-  const handleGoogleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      await googleSignIn();
-      const user = auth.currentUser;
-      if (user) {
-        const data_ref = ref(database, "users/" + user.uid);
-        onValue(data_ref, (snapshot) => {
-          if (snapshot.exists()) {
-            if (snapshot.val().Profession === "Student") {
-              navigate("/studenthome");
-            }
-            else {
-              navigate("/profhome")
-            }
-          } else {
-            navigate("/details");
-          }
-        });
-      } else {
-        // handle case where user is null or undefined
-        console.log("User is null or undefined");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
   return (
     <>
       <body>
         <div className="container_001">
           <Navbar />
+          <Projects/>
           <div className="login_navbar1">
           </div>
         </div>

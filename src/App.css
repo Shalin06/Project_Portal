@@ -1144,4 +1144,43 @@ u1 l1 Link {
 	cursor: pointer;
 	font-size: 15px;
 	margin-left: 5px;
+<<<<<<< HEAD
 }
+=======
+}
+table {
+	border-collapse: collapse;
+	width: 100%;
+  }
+  
+  th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+	background-color: #f2f2f2;
+  }
+  .projects-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+  }
+  
+  .projects-header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+  }
+  
+  .projects-header h1 {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+  }
+	
+>>>>>>> 14e04cbed371623affb81f8b633fd9b993b03475
