@@ -131,7 +131,7 @@ const ProfessorHome = () => {
         })
         .catch((error) => {
           // Handle any errors
-         
+          alert("No resume")
         });
       } catch (error) {
         console.error(error);
