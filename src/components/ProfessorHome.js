@@ -92,6 +92,7 @@ const ProfessorHome = () => {
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
     const [studentsApplied, setStudentsApplied] = useState([])
+    const [searchQuery, setSearchQuery] = useState('');
     const { user } = useUserAuth();
     useEffect(() => {
       const projRef = ref(database, `users/${user.uid}/projects`);
@@ -106,7 +107,9 @@ const ProfessorHome = () => {
         setProjectInfo(arr);
       });
     }, [user]);
-
+    const filteredProjects = projectInfo.filter((project) =>
+      project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     function ProjectDetails({ projectName, email, numStudents, profname, department, deadline, remark, projectid, Students, vacancy }) {
       if (typeof Students !== 'undefined') {
         var arrapp = []
@@ -137,6 +140,7 @@ const ProfessorHome = () => {
             <div key={item.id}>{item.nameee}
             </div>)
           return (
+            
             <div className="bio_dept_img3">
               <div className="bio_dept3">
                 <img src="images/avatar.png" className="bio_img"></img>
@@ -254,23 +258,33 @@ const ProfessorHome = () => {
     const handleButtonClick = () => {
       setShowList(!showList);
     };
+    function handleInputChange(event) {
+      setSearchQuery(event.target.value);
+    }
 
     return (
       <div className="availabel_button">
-        <div className="availabel_click">
-          <button className="a1" onClick={handleButtonClick}>
-            {showList ? "Hide My Projects" : "Show My Projects"}{" "}
-          </button>
-        </div>
-        {showList && (
-          <div>
-            {projectInfo.map((project) => (
+      <div className="availabel_click">
+        <button className="a1" onClick={handleButtonClick}>
+          {showList ? "Hide My Projects" : "Show My Projects"}{" "}
+        </button>
+      </div>
+      <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
+      {showList && (
+        <div>
+
+        
+        <div>
+            
+          {projectInfo
+            .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
+            .map((project) => (
               <ProjectDetails key={project.id} {...project} />
             ))}
-          </div>
-        )}
-        <button onClick={sendMail}> Send Mail</button>
-      </div>
+            </div>
+        </div>
+      )}
+    </div>
     );
   };
   return (

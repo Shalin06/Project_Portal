@@ -44,6 +44,7 @@ const StudentProj = () => {
   }
   const AvailableProject = () => {
     const [projectInfo, setProjectinfo] = useState([])
+    const [searchQuery, setSearchQuery] = useState('');
     useEffect(() => {
       const data_ref = ref(database, "Projects/")
       var arr = []
@@ -69,21 +70,35 @@ const StudentProj = () => {
     const handleButtonClick = () => {
       setShowList(!showList);
     };
-
+    const filteredProjects = projectInfo.filter((project) =>
+      project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    function handleInputChange(event) {
+      setSearchQuery(event.target.value);
+    }
     return (
-      <div classname="availabel_button">
-        <div className="availabel_click">
-          <button className="a1"
-            onClick={handleButtonClick} >{showList ? 'Hide Available Projects' : 'Show Available Projects'} </button>
-        </div>
-        {showList && (
-          <div>
-            {projectInfo.map((project, index) => (
-              <ProjectDetails key={index} {...project} />
-            ))}
-          </div>
-        )}
+      <div className="availabel_button">
+      <div className="availabel_click">
+        <button className="a1" onClick={handleButtonClick}>
+          {showList ? "Hide My Projects" : "Show My Projects"}{" "}
+        </button>
       </div>
+      <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
+      {showList && (
+        <div>
+
+        
+        <div>
+            
+          {projectInfo
+            .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
+            .map((project) => (
+              <ProjectDetails key={project.id} {...project} />
+            ))}
+            </div>
+        </div>
+      )}
+    </div>
     );
   }
   function addthestudenttoproject(projectid) {
