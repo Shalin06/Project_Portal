@@ -33,7 +33,7 @@ body {
 
 .form-inline01 {
 	display: flex;
-	margin-top:5em;
+	margin-top: 5em;
 	margin-left: 60em;
 	flex-direction: column;
 	background: rgb(231, 235, 247);
@@ -49,20 +49,24 @@ body {
 .login_input01 {
 	margin-bottom: 20px;
 }
-.login_details{
+
+.login_details {
 	margin-bottom: 20px;
 }
-.login_p{
+
+.login_p {
 	font-size: 30px;
 	font-weight: 500;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: #080808;
 	margin-bottom: -1px;
 }
-.login_h{
+
+.login_h {
 	font-size: 15px;
 	color: #9a9999;
 }
+
 /* Style the submit button */
 .LoginButton {
 	background-color: #3D2460;
@@ -120,6 +124,7 @@ body {
 	margin-top: 10px;
 	border-radius: 5px;
 }
+
 .btn_new1 {
 	width: 110px;
 	border: none;
@@ -133,15 +138,16 @@ body {
 	margin-top: 10px;
 	border-radius: 5px;
 }
+
 .gbtn {
 	display: flex;
 	width: 100%;
 	max-width: 100vh;
 	border-radius: 10px;
 	padding-left: 10px;
-	margin-top:10px ;
-  }
-  
+	margin-top: 10px;
+}
+
 .gbtn {
 	color: #2600fb;
 	border-radius: 5px;
@@ -151,8 +157,8 @@ body {
 	font-weight: 300;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	cursor: pointer;
-  }
-  
+}
+
 .col-2 {
 	position: relative;
 	flex-basis: 60%;
@@ -451,7 +457,7 @@ u1 l1 Link {
 	height: 2000px;
 }
 
-.col5{
+.col5 {
 	margin-top: -330px;
 	margin-left: 100px;
 }
@@ -598,6 +604,7 @@ u1 l1 Link {
 	will-change: transform, opacity;
 	z-index: 0;
 }
+
 .availabel_click1 {
 	width: 15%;
 	position: relative;
@@ -640,6 +647,7 @@ u1 l1 Link {
 	background: none;
 	border: none;
 }
+
 .a2 {
 	color: rgb(0, 0, 0);
 	cursor: pointer;
@@ -708,17 +716,20 @@ u1 l1 Link {
 	margin-top: 10px;
 	border-radius: 6px;
 }
+
 .login_reserch {
 	background: rgb(46, 67, 92);
 	margin-left: 87px;
 	padding-left: 25px;
-	height: 35px;
-	padding-top: 2.9px;
-	font-size: 20px;
+	height: 37px;
+	padding-top: 7px;
+	font-size: 16px;
+	font-weight: 500;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: white;
 	width: 87.3%;
-	border-radius: 5px;
 }
+
 .bio_reserch {
 	background: rgb(99, 117, 255);
 	margin-top: 1.5em;
@@ -729,6 +740,7 @@ u1 l1 Link {
 	color: white;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
 .services {
 	width: 87.2%;
 	background-color: white;
@@ -811,12 +823,13 @@ u1 l1 Link {
 	background: rgb(46, 67, 92);
 	margin-left: 87px;
 	padding-left: 25px;
-	height: 35px;
-	padding-top: 2.9px;
-	font-size: 20px;
+	height: 37px;
+	padding-top: 7px;
+	font-size: 16px;
+	font-weight: 500;
+	font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: white;
 	width: 87.3%;
-	border-radius: 5px;
 }
 
 .events1 {
@@ -864,6 +877,7 @@ u1 l1 Link {
 	width: 100%;
 	display: flex;
 	justify-content: center;
+	margin-bottom: 0px;
 }
 
 .faculty_members {
@@ -879,12 +893,14 @@ u1 l1 Link {
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	margin-bottom: 5px;
 }
-.text_font10{
+
+.text_font10 {
 	font-weight: 500;
 	font-size: 17px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	margin-bottom: 5px;
 }
+
 .text_font5 {
 	font-size: 15px;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -1001,7 +1017,8 @@ u1 l1 Link {
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: #080808;
 }
-.res2_img{
+
+.res2_img {
 	display: flex;
 	width: 600px;
 	height: 400px;
@@ -1009,13 +1026,15 @@ u1 l1 Link {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
+
 .text_font7_1 {
 	font-size: 17px;
 	font-weight: bold;
 	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 	color: #080808;
 }
-.res3_img{
+
+.res3_img {
 	display: flex;
 	width: 700px;
 	height: 400px;
@@ -1023,7 +1042,8 @@ u1 l1 Link {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
-.res3_1_img{
+
+.res3_1_img {
 	display: flex;
 	width: 400px;
 	height: 400px;
@@ -1031,7 +1051,8 @@ u1 l1 Link {
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
-.accept_button{
+
+.accept_button {
 	width: 50%;
 	margin-bottom: 10px;
 	padding: 10px 5px 10px 5px;
@@ -1044,7 +1065,8 @@ u1 l1 Link {
 	margin-left: 5px;
 	margin-right: 5px;
 }
-.reject_button{
+
+.reject_button {
 	width: 65%;
 	padding: 10px 5px 10px 5px;
 	height: 45px;
@@ -1056,6 +1078,7 @@ u1 l1 Link {
 	font-size: 15px;
 	margin-left: 5px;
 }
+
 .bio_dept_img3 {
 	width: 55%;
 	background-image: linear-gradient(rgb(255, 255, 255), rgb(176, 184, 246));
@@ -1089,6 +1112,7 @@ u1 l1 Link {
 .title_bio3 {
 	padding-top: 25px;
 }
+
 .bio_dept_img4 {
 	width: 40%;
 	background-image: linear-gradient(rgb(255, 255, 255), rgb(176, 184, 246));
@@ -1122,10 +1146,12 @@ u1 l1 Link {
 .title_bio4 {
 	padding-top: 25px;
 }
-.accept_reject{
+
+.accept_reject {
 	display: flex;
 	flex-wrap: wrap;
 }
+
 .a3 {
 	color: rgb(0, 0, 0);
 	cursor: pointer;
@@ -1134,19 +1160,35 @@ u1 l1 Link {
 	background: none;
 	border: none;
 }
-.delete_css{
+
+.delete_css {
 	width: 50%;
 	padding: 10px 5px 10px 5px;
 	border-radius: 10px;
-	background-color:  #3D2460;
+	background-color: #3D2460;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
 	font-size: 15px;
 	margin-left: 5px;
 }
+
 table {
 	width: 100%;
+}
+
+th,
+td {
+	padding: 0.5rem;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+	font-weight: bold;
+}
+tr:nth-child(even) {
+	background-color: #ffffff;
 	border-collapse: collapse;
   }
   
@@ -1170,24 +1212,50 @@ table {
   td.apply_button {
 	text-align: center;
   }
-  .projects-container {
+  
+  tr:hover {
+	background-color: #c5d7ff;
+  }
+.projects-container2 {
+	margin-top: -40px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 50px;
-  }
-  
-  .projects-header {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	position: relative;
-  }
-  
-  .projects-header h1 {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-  }
-	
+	margin-left: 87px;
+	width: 87.3%;
+	margin-bottom: 2.2em;
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+}
+
+.project_available {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.projects-header {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.project-table {
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.Apply_button1 {
+	background: rgb(46, 67, 92);
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	font-size: 15px;
+	height: 40px;
+	width: 70px;
+	margin-left: 25px;
+	border-radius: 5px;
+}
+
+.column_name {
+	background: rgb(46, 67, 92);
+	color: white;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	font-size: 16px;
+	font-weight: 500;
+}
