@@ -20,23 +20,25 @@ const handleLogout = async(e) =>{
 }
 const [fileUploaded, setFileUploaded] = useState(false);
 useEffect(() => {
-  async function getdata() {
-    const fileRef = storageref(storage, `${user.uid}/Resume`);
-    var fileExists = false;
-    try {
-      const url = await getDownloadURL(fileRef);
-      fileExists = true;
-    } catch (error) {
-      if (error.code === "storage/object-not-found") {
-        fileExists = false;
+  if(user.uid){
+      async function getdata() {
+      const fileRef = storageref(storage, `${user.uid}/Resume`);
+      var fileExists = false;
+      try {
+        const url = await getDownloadURL(fileRef);
+        fileExists = true;
+      } catch (error) {
+        if (error.code === "storage/object-not-found") {
+          fileExists = false;
+        }
+      }
+      if (fileExists) {
+        setFileUploaded(true);
       }
     }
-    if (fileExists) {
-      setFileUploaded(true);
+    getdata()
     }
-  }
-  getdata()
-}, [fileUploaded]);
+}, [fileUploaded,user.uid]);
 const Form = () => {
   const [UserName, setUsername] = useState('');
   const [Department, setDepartment] = useState('');
@@ -125,16 +127,15 @@ const UploadFile = async(event) => {
   const file = event.target.files[0];
   var reader = new FileReader();
   reader.readAsArrayBuffer(file);
-
+  const metadata = {
+    contentType: `${file.type}`,
+  };
   reader.onload = async function (event) {
     var blob = new Blob([event.target.result], { type: file.type });
 
     // Upload the file to Firebase Storage
-    const metadata = {
-      contentType: `${user.uid}/${file.type}`,
-    };
     const resume_ref = storageref(storage, `${user.uid}/Resume`);
-    const uploadTask = uploadBytesResumable(resume_ref, blob, metadata);
+    const uploadTask = uploadBytesResumable(resume_ref, blob,metadata);
 
     uploadTask.on(
       "state_changed",
@@ -181,11 +182,29 @@ const handleDeleteFile = async () => {
   }
 };
   
-const handleSeeFile = async () => {
+const handleSeeFile = async (e) => {
+  e.preventDefault()
   const fileRef = storageref(storage, `${user.uid}/Resume`);
   try {
-    const url = await getDownloadURL(fileRef);
-    console.log(url)
+    await getDownloadURL(fileRef)
+    .then((url) => {
+      // `url` is the download URL for 'images/stars.jpg'
+      console.log(url)
+      // This can be downloaded directly:
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = (event) => {
+        const blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+      window.open(url)
+      
+    })
+    .catch((error) => {
+      // Handle any errors
+     
+    });
   } catch (error) {
     console.error(error);
   }

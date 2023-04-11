@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
-import { database } from "../firebase";
+import { database,storage } from "../firebase";
 import { ref, set, off, onValue, child, get, update,remove } from "firebase/database";
+import {ref as storageref,uploadBytesResumable,getDownloadURL,deleteObject} from "firebase/storage"
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
@@ -110,6 +111,32 @@ const ProfessorHome = () => {
     const filteredProjects = projectInfo.filter((project) =>
       project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
     );
+    const handleSeeFile = async (userid) => {
+      const fileRef = storageref(storage, `${userid}/Resume`);
+      try {
+        await getDownloadURL(fileRef)
+        .then((url) => {
+          // `url` is the download URL for 'images/stars.jpg'
+          console.log(url)
+          // This can be downloaded directly:
+          const xhr = new XMLHttpRequest();
+          xhr.responseType = 'blob';
+          xhr.onload = (event) => {
+            const blob = xhr.response;
+          };
+          xhr.open('GET', url);
+          xhr.send();
+          window.open(url)
+          
+        })
+        .catch((error) => {
+          // Handle any errors
+         
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
     function ProjectDetails({ projectName, email, numStudents, profname, department, deadline, remark, projectid, Students, vacancy }) {
       if (typeof Students !== 'undefined') {
         var arrapp = []
@@ -189,6 +216,7 @@ const ProfessorHome = () => {
             <div style={{display: 'inline-flex'}}>
               <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible} className="accept_button">Accept</button>
               <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
+              <button onClick={() => handleSeeFile(item.id)}>See Resume</button>
             </div>
             </div>)
           return (
