@@ -32,15 +32,14 @@ function Table({ data }) {
   ];
   renamedColumns['apply'] = 'Apply for Project';
   const cellStyle = {
-    padding: '12px',
-    border: '1px solid #ddd',
+    padding: '15px',
   };
   return (
     <table cellSpacing="0">
       <thead>
         <tr>
           {columns.map((colName, index) => (
-            <th key={index}>{renamedColumns[colName]}</th>
+            <th key={index} className='column_name'>{renamedColumns[colName]}</th>
           ))}
         </tr>
       </thead>
@@ -51,7 +50,7 @@ function Table({ data }) {
               if (colName === 'apply') {
                 return (
                   <td key={index} style={cellStyle}>
-                    <button onClick={() => navigate("signup")}>Apply</button>
+                    <button onClick={() => navigate("signup")} className='Apply_button1'>Apply</button>
                   </td>
                 );
               } else {
