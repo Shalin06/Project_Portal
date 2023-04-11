@@ -140,7 +140,7 @@ const Login1 = () => {
                                     </Button>
                                     <div  style={{alignItems:"center",marginTop:"20px",width:"40%"}}>
                                     <GoogleButton   
-                                        type=""
+                                        type="dark"
                                         label="Sign in with Google"
                                         onClick={handleGoogleSignIn}
                                     />
