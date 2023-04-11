@@ -7,6 +7,9 @@ import { ref, set, off, onValue, child, get, update,remove } from "firebase/data
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
+import {send} from '@sendgrid/mail'
+import axios from 'axios';
+
 // import {props}
 const ProfessorHome = () => {
   const [showList, setShowList] = useState(false)
@@ -45,6 +48,7 @@ const ProfessorHome = () => {
       </nav>
     );
   }
+
   function handleAccept(userid, projectid) {
     const data_ref = ref(database, `Projects/${projectid}/Students`)
     set(child(data_ref, `${userid}/status`), "Accepted")
@@ -71,9 +75,24 @@ const ProfessorHome = () => {
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
     remove(userProjectsRef)
   }
+  const sendMail = (e) => {
+    e.preventDefault()
+    const msg = {
+      SecureToken : "241244e5-98d5-4956-ac33-572fc4ca98cd",
+      To : 'shalin6102003@gmail.com',
+      From : 'jain.75@iitj.ac.in',
+      Subject : "This is the subject",
+      Body : "And this is the body"
+      }
+      console.log(window.Email)
+      if(window.Email){
+        window.Email.send(msg).then(()=>alert("email is sent"))
+      }
+  }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
     const [studentsApplied, setStudentsApplied] = useState([])
+    const [searchQuery, setSearchQuery] = useState('');
     const { user } = useUserAuth();
     useEffect(() => {
       const projRef = ref(database, `users/${user.uid}/projects`);
@@ -88,7 +107,9 @@ const ProfessorHome = () => {
         setProjectInfo(arr);
       });
     }, [user]);
-
+    const filteredProjects = projectInfo.filter((project) =>
+      project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     function ProjectDetails({ projectName, email, numStudents, profname, department, deadline, remark, projectid, Students, vacancy }) {
       if (typeof Students !== 'undefined') {
         var arrapp = []
@@ -119,6 +140,7 @@ const ProfessorHome = () => {
             <div key={item.id}>{item.nameee}
             </div>)
           return (
+            
             <div className="bio_dept_img3">
               <div className="bio_dept3">
                 <img src="images/avatar.png" className="bio_img"></img>
@@ -236,22 +258,33 @@ const ProfessorHome = () => {
     const handleButtonClick = () => {
       setShowList(!showList);
     };
+    function handleInputChange(event) {
+      setSearchQuery(event.target.value);
+    }
 
     return (
       <div className="availabel_button">
-        <div className="availabel_click">
-          <button className="a1" onClick={handleButtonClick}>
-            {showList ? "Hide My Projects" : "Show My Projects"}{" "}
-          </button>
-        </div>
-        {showList && (
-          <div>
-            {projectInfo.map((project) => (
+      <div className="availabel_click">
+        <button className="a1" onClick={handleButtonClick}>
+          {showList ? "Hide My Projects" : "Show My Projects"}{" "}
+        </button>
+      </div>
+      <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
+      {showList && (
+        <div>
+
+        
+        <div>
+            
+          {projectInfo
+            .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
+            .map((project) => (
               <ProjectDetails key={project.id} {...project} />
             ))}
-          </div>
-        )}
-      </div>
+            </div>
+        </div>
+      )}
+    </div>
     );
   };
   return (
