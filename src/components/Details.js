@@ -3,8 +3,9 @@ import { useState,useEffect} from 'react';
 import { useNavigate } from "react-router";
 import {Button } from "react-bootstrap"
 import { useUserAuth } from "../context/UserAuthContext";
-import {ref, onValue,update,set} from "firebase/database";
-import { database } from "../firebase";
+import {ref, onValue,update,set,get} from "firebase/database";
+import {ref as storageref,uploadBytesResumable,getDownloadURL,deleteObject} from "firebase/storage"
+import { database, storage } from "../firebase";
 import { Link} from "react-router-dom";
 import detail from './deatil.json';
 import Lottie from "lottie-react"
@@ -12,31 +13,48 @@ import Lottie from "lottie-react"
 const Details = () => {
   const { user } = useUserAuth();
   const navigate = useNavigate();
-const {logOut} = useUserAuth()
+  const {logOut} = useUserAuth()
 const handleLogout = async(e) =>{
   await logOut()
   navigate("/")
 }
-
+const [fileUploaded, setFileUploaded] = useState(false);
+const [UserName, setUsername] = useState('');
+const [Department, setDepartment] = useState('');
+const [Profession, setProfession] = useState('');
+useEffect(() => {
+  async function getdata() {
+    const fileRef = storageref(storage, `${user.uid}/Resume`);
+    var fileExists = false;
+    try {
+      const url = await getDownloadURL(fileRef);
+      fileExists = true;
+    } catch (error) {
+      if (error.code === "storage/object-not-found") {
+        fileExists = false;
+      }
+    }
+    if (fileExists) {
+      setFileUploaded(true);
+    }
+  }
+  getdata()
+}, [fileUploaded]);
 const Form = () => {
-  
-  const [UserName, setUsername] = useState('');
-  const [Department, setDepartment] = useState('');
-  const [Profession, setProfession] = useState('');
-
   useEffect(() => {
     const userRef = ref(database,'users/'+ user.uid);
-    onValue(userRef, (snapshot) => {
-      if(snapshot.exists){
-        setUsername(snapshot.val().UserName || '');
-        setDepartment(snapshot.val().Department || '');
-        setProfession(snapshot.val().Profession || '');
+    if(user.uid){
+      async function getdata() {
+        await get(userRef).then((snapshot)=>{
+          if(snapshot.exists){
+            setUsername(snapshot.val().UserName);
+            setDepartment(snapshot.val().Department);
+            setProfession(snapshot.val().Profession);
+          }
+        });
       }
-    });
-
-    return () => {
-     
-    };
+      getdata()
+    }
   }, []);
   function Navbar() {
     return (
@@ -73,46 +91,111 @@ const Form = () => {
       </nav>
     );
   }
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+const handleUsernameChange = (event) => {
+  setUsername(event.target.value);
+};
 
-  const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
-  };
+const handleDepartmentChange = (event) => {
+  setDepartment(event.target.value);
+};
 
-  const handleProfessionChange = (event) => {
-    setProfession(event.target.value);
-  };
+const handleProfessionChange = (event) => {
+  setProfession(event.target.value);
+};
+const handleSubmit = (event) => {
+  event.preventDefault();
+  const info =  {UserName, Department,Profession}
+  set(ref(database,"users/"+user.uid),info
+  )
+  alert('data stored')
+  if(Profession === "Professor"){
+    navigate("/profhome")
+  }
+  else{
+    navigate("/studenthome")
+  }
+}  
+const UploadFile = async(event) => {
+  event.preventDefault();
+  const file = event.target.files[0];
+  var reader = new FileReader();
+  reader.readAsArrayBuffer(file);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const info =  {UserName, Department,Profession}
-    // if(UserName && Department && Profession){
-      alert("hi")
-      set(ref(database,"users/"+user.uid),info
-      )
-      alert('data stored')
-      if(Profession === "Professor"){
-        navigate("/profhome")
+  reader.onload = async function (event) {
+    var blob = new Blob([event.target.result], { type: file.type });
+
+    // Upload the file to Firebase Storage
+    const metadata = {
+      contentType: `${user.uid}/${file.type}`,
+    };
+    const resume_ref = storageref(storage, `${user.uid}/Resume`);
+    const uploadTask = uploadBytesResumable(resume_ref, blob, metadata);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        switch (error.code) {
+          case "storage/unauthorized":
+            alert("unauthorized");
+            break;
+          case "storage/canceled":
+            alert("canceled");
+            break;
+          case "storage/unknown":
+            alert(error.message);
+            break;
+        }
+      },
+      () => {
+        setFileUploaded(true);
       }
-      else{
-        navigate("/studenthome")
-      }
-    }
-  // };
-
+    );
+};
+    
+};
+  
+const handleDeleteFile = async () => {
+  const fileRef = storageref(storage, `${user.uid}/Resume`);
+  try {
+    await deleteObject(fileRef);
+    setFileUploaded(false);
+  } catch (error) {
+    console.error(error);
+  }
+};
+  
+const handleSeeFile = async () => {
+  const fileRef = storageref(storage, `${user.uid}/Resume`);
+  try {
+    const url = await getDownloadURL(fileRef);
+    console.log(url)
+  } catch (error) {
+    console.error(error);
+  }
+};
   return (
     <>
     <Navbar/>
     <div className="container2">
-    <form onSubmit={handleSubmit} className = "deatil_form">
+    <form className = "deatil_form">
       <div className="col4">
           <h2>Details Form</h2>
       </div>
       <label className="username_label">
         Username :
-        <input type="text" value={UserName} onChange={handleUsernameChange} className = "username_input"/>
+        <input type="text" value={UserName || ''} onChange={handleUsernameChange} className = "username_input"/>
       </label>
       <br />
       <label className="department_select">
@@ -139,7 +222,22 @@ const Form = () => {
       </label>
       <br />
       <br />
-      <button type="submit" className="detail_save">Save</button>
+      <button type="submit" className="detail_save" onClick={() => handleSubmit}>Save</button>
+      <div>
+        {!fileUploaded && (
+          <div>
+            <label htmlFor="resume_input">Upload Resume</label>
+            <input type="file" id="resume_input" onChange={ UploadFile} />
+          </div>
+        )}
+        {fileUploaded && (
+          <div>
+            <p>Resume Uploaded</p>
+            <button onClick={handleSeeFile}>See File</button>
+            <button onClick={handleDeleteFile}>Delete File</button>
+          </div>
+        )}
+      </div>
     </form>
     
     </div>

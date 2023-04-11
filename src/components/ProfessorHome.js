@@ -7,6 +7,9 @@ import { ref, set, off, onValue, child, get, update,remove } from "firebase/data
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
+import {send} from '@sendgrid/mail'
+import axios from 'axios';
+
 // import {props}
 const ProfessorHome = () => {
   const [showList, setShowList] = useState(false)
@@ -45,6 +48,7 @@ const ProfessorHome = () => {
       </nav>
     );
   }
+
   function handleAccept(userid, projectid) {
     const data_ref = ref(database, `Projects/${projectid}/Students`)
     set(child(data_ref, `${userid}/status`), "Accepted")
@@ -70,6 +74,20 @@ const ProfessorHome = () => {
     remove(data_ref)
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
     remove(userProjectsRef)
+  }
+  const sendMail = (e) => {
+    e.preventDefault()
+    const msg = {
+      SecureToken : "241244e5-98d5-4956-ac33-572fc4ca98cd",
+      To : 'shalin6102003@gmail.com',
+      From : 'jain.75@iitj.ac.in',
+      Subject : "This is the subject",
+      Body : "And this is the body"
+      }
+      console.log(window.Email)
+      if(window.Email){
+        window.Email.send(msg).then(()=>alert("email is sent"))
+      }
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
@@ -251,6 +269,7 @@ const ProfessorHome = () => {
             ))}
           </div>
         )}
+        <button onClick={sendMail}> Send Mail</button>
       </div>
     );
   };

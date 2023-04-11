@@ -43,7 +43,7 @@ const Login = () => {
         const newArr = projects.map(({ Students, profid, projectid, ...rest }) => rest);
         setProjectData(newArr);
       });
-    }, []);
+    }, [projectData]);
   
       return (
         <div className="projects-container" style={{textAlign:'center'}}>

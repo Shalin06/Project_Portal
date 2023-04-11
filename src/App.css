@@ -1146,18 +1146,29 @@ u1 l1 Link {
 	margin-left: 5px;
 }
 table {
-	border-collapse: collapse;
 	width: 100%;
-  }
-  
-  th, td {
-	padding: 8px;
-	text-align: left;
-	border-bottom: 1px solid #ddd;
+	border-collapse: collapse;
   }
   
   th {
-	background-color: #f2f2f2;
+	padding: 0 10px; /* adds padding to the left and right of the header text */
+	text-align: center; /* justifies the text within the header */
+  }
+  
+  th:first-child {
+	padding-left: 0; /* removes padding from the left of the first header */
+  }
+  
+  th:last-child {
+	padding-right: 0; /* removes padding from the right of the last header */
+  }
+  
+  td {
+	text-align: center;
+  }
+  
+  td.apply_button {
+	text-align: center;
   }
   .projects-container {
 	display: flex;
