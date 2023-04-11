@@ -19,9 +19,6 @@ const handleLogout = async(e) =>{
   navigate("/")
 }
 const [fileUploaded, setFileUploaded] = useState(false);
-const [UserName, setUsername] = useState('');
-const [Department, setDepartment] = useState('');
-const [Profession, setProfession] = useState('');
 useEffect(() => {
   async function getdata() {
     const fileRef = storageref(storage, `${user.uid}/Resume`);
@@ -41,21 +38,26 @@ useEffect(() => {
   getdata()
 }, [fileUploaded]);
 const Form = () => {
+  const [UserName, setUsername] = useState('');
+  const [Department, setDepartment] = useState('');
+  const [Profession, setProfession] = useState('');
   useEffect(() => {
     const userRef = ref(database,'users/'+ user.uid);
     if(user.uid){
       async function getdata() {
         await get(userRef).then((snapshot)=>{
           if(snapshot.exists){
-            setUsername(snapshot.val().UserName);
-            setDepartment(snapshot.val().Department);
-            setProfession(snapshot.val().Profession);
+            if(!snapshot.val().email){
+              setUsername(snapshot.val().UserName);
+              setDepartment(snapshot.val().Department);
+              setProfession(snapshot.val().Profession);
+            }
           }
         });
       }
       getdata()
     }
-  }, []);
+  }, [user.uid]);
   function Navbar() {
     return (
       <nav className="navbar">
@@ -102,10 +104,13 @@ const handleDepartmentChange = (event) => {
 const handleProfessionChange = (event) => {
   setProfession(event.target.value);
 };
-const handleSubmit = (event) => {
-  event.preventDefault();
-  const info =  {UserName, Department,Profession}
-  set(ref(database,"users/"+user.uid),info
+const handleSubmit = async(event) => {
+  event.preventDefault()
+  await set(ref(database,"users/"+user.uid),{
+    UserName,
+    Department,
+    Profession,
+  }
   )
   alert('data stored')
   if(Profession === "Professor"){
@@ -189,6 +194,7 @@ const handleSeeFile = async () => {
     <>
     <Navbar/>
     <div className="container2">
+    <nav>
     <form className = "deatil_form">
       <div className="col4">
           <h2>Details Form</h2>
@@ -222,7 +228,7 @@ const handleSeeFile = async () => {
       </label>
       <br />
       <br />
-      <button type="submit" className="detail_save" onClick={() => handleSubmit}>Save</button>
+      <button onClick = {handleSubmit} className="detail_save">Save</button>
       <div>
         {!fileUploaded && (
           <div>
@@ -239,7 +245,7 @@ const handleSeeFile = async () => {
         )}
       </div>
     </form>
-    
+    </nav>
     </div>
     </>
   );

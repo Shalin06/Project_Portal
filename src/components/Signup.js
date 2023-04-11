@@ -25,7 +25,7 @@ const Signup = () => {
       set(ref(database, "users/" + user.uid), {
         email: email
       })
-      navigate("/");
+      navigate("/login1");
     } catch (err) {
       setError(err.message);
     }
