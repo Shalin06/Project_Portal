@@ -24,7 +24,8 @@ function Table({ data }) {
   columns = [    'projectName',    'profname',    'email',    'department',    'numStudents',    'vacancy',    'deadline',    'remark',    'apply'] // Add a new column for the Apply button  ];
   renamedColumns['apply'] = 'Apply for Project'
   const cellStyle = {
-    padding: '15px',
+    padding: '12px',
+    border: '1px solid #ddd',
   };
 
   const handleSearch = (event) => {

@@ -43,14 +43,14 @@ const Login = () => {
         const newArr = projects.map(({ Students, profid, projectid, ...rest }) => rest);
         setProjectData(newArr);
       });
-    }, [projectData]);
+    }, []);
   
       return (
-        <div className="projects-container2" style={{textAlign:'center'}}>
-          <h1 className="project_available"></h1>
+        <div className="projects-container" style={{textAlign:'center'}}>
+          <h1>Projects Available</h1>
           <div className="projects-header">
           </div>
-          <Table data={projectData} className = "project-table"/>
+          <Table data={projectData} />
         </div>
       );
   };
