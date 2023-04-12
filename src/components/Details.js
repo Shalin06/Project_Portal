@@ -70,8 +70,6 @@ const Form = () => {
              )} 
         <div className="navbar__container">
           <form className="navbar__search">
-            <input type="text" placeholder="Search for anything" className="search_input"/>
-            <button type="submit" className="search_button">Search</button>
           </form>
           <ul className="navbar__links">
             {Profession === 'Professor' ? (
@@ -247,22 +245,22 @@ const handleSeeFile = async (e) => {
       </label>
       <br />
       <br />
-      <button onClick = {handleSubmit} className="detail_save">Save</button>
       <div>
         {!fileUploaded && (
-          <div>
-            <label htmlFor="resume_input">Upload Resume</label>
+          <div className="resume_upload1">
+            <label htmlFor="resume_input">Upload Resume :</label>
             <input type="file" id="resume_input" onChange={ UploadFile} />
           </div>
         )}
         {fileUploaded && (
           <div>
             <p>Resume Uploaded</p>
-            <button onClick={handleSeeFile}>See File</button>
-            <button onClick={handleDeleteFile}>Delete File</button>
+            <button onClick={handleSeeFile} className="resume_see1">See File</button>
+            <button onClick={handleDeleteFile} className="resume_see2">Delete File</button>
           </div>
         )}
       </div>
+      <button onClick = {handleSubmit} className="detail_save">Save</button>
     </form>
     </nav>
     </div>
@@ -273,7 +271,7 @@ const handleSeeFile = async (e) => {
   return (
     <>
     <Form/>
-    <div style={{ width: "40%", marginLeft: '150px', marginTop: '-650px' }}>
+    <div style={{ width: "40%", marginLeft: '200px', marginTop: '-650px' }}>
           <Lottie loop={true} animationData={detail} className="animation2" />
     </div>
     </>

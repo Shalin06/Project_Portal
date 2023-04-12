@@ -21,7 +21,8 @@ function Table({ data }) {
   };
 
   // Add new column "Apply for Project"
-  columns = [    'projectName',    'profname',    'email',    'department',    'numStudents',    'vacancy',    'deadline',    'remark',    'apply'] // Add a new column for the Apply button  ];
+  columns = [    'projectName',    'profname',    'email',    'department',    'numStudents',    'vacancy',    'deadline',    'remark',    'apply']
+   // Add a new column for the Apply button  ];
   renamedColumns['apply'] = 'Apply for Project'
   const cellStyle = {
     padding: '12px',
@@ -104,7 +105,7 @@ function Table({ data }) {
   }, [data, searchQueries.project, searchQueries.department, searchQueries.vacancy]);
   return (
     <>
-      <form className="navbar__search">
+      <form className="navbar_search00">
         <input
           style={{ marginBottom: '10px',marginRight:'10px'}}
           className='search_input'
@@ -112,7 +113,7 @@ function Table({ data }) {
           name="project"
           value={searchQueries.project}
           onChange={handleSearch}
-          placeholder="project"
+          placeholder="Search Project"
         />
         <input
         style={{ marginBottom: '10px',marginRight:'10px'}}
@@ -121,14 +122,14 @@ function Table({ data }) {
           name="department"
           value={searchQueries.department}
           onChange={handleSearch}
-          placeholder="department"
+          placeholder="Search Department"
         />
       </form>
-      <table cellSpacing="0">
+      <table cellSpacing="0" className='content_table'>
         <thead>
           <tr>
             {columns.map((colName, index) => (
-              <th key={index} onClick={() => handleSort(colName)}>
+              <th  className='profession_details93' key={index} onClick={() => handleSort(colName)}>
               <Button variant='light'>{renamedColumns[colName]}</Button>
               {sortColumn === colName && (
                 <FontAwesomeIcon
@@ -142,7 +143,7 @@ function Table({ data }) {
         </thead>
         <tbody>
           {sortedRows.map((item, index) => (
-            <tr key={index}>
+            <tr key={index} className='profession_details93'>
               {columns.map((colName, index) => {
                 if (colName === 'apply') {
                   return (

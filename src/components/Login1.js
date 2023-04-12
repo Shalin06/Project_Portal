@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, onValue } from "firebase/database";
+import { ref, onValue,set } from "firebase/database";
 import { auth } from "../firebase";
 import study from './study.json';
 import Lottie from "lottie-react"
@@ -49,6 +49,7 @@ const Login1 = () => {
             await logIn(email, password);
             const user = auth.currentUser;
             if (user) {
+                
                 const data_ref = ref(database, "users/" + user.uid);
                 onValue(data_ref, (snapshot) => {
                     if (snapshot.exists()) {
@@ -81,8 +82,9 @@ const Login1 = () => {
             await googleSignIn();
             const user = auth.currentUser;
             if (user) {
+                
                 const data_ref = ref(database, "users/" + user.uid);
-                onValue(data_ref, (snapshot) => {
+                onValue(data_ref, async (snapshot) => {
                     if (snapshot.exists()) {
                         if (snapshot.val().Profession === "Student") {
                             navigate("/studenthome");
@@ -91,6 +93,9 @@ const Login1 = () => {
                             navigate("/profhome")
                         }
                     } else {
+                        await set(ref(database, "users/" + user.uid), {
+                            email: email
+                          })
                         navigate("/details");
                     }
                 });

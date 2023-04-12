@@ -361,16 +361,12 @@ u1 l1 Link {
 }
 
 .search_input {
-	padding-left: 10px;
-	width: 200px;
-	height: 30px;
-	border-radius: 10px;
+	padding-left: 15px;
+	width: 250px;
 	outline: none;
-	border: 1px solid rgb(193, 193, 193);
-}
-
-.navbar__links :hover {
-	color: #f50d0d;
+	height: 35px;
+	border-radius: 10px;
+	border: 1px solid rgb(111, 111, 111);
 }
 
 .logout {
@@ -394,7 +390,7 @@ u1 l1 Link {
 	padding-right: 30px;
 	padding-left: 30px;
 	margin-left: 850px;
-	margin-top: 100px;
+	margin-top: 50px;
 }
 
 .username_label {
@@ -406,7 +402,7 @@ u1 l1 Link {
 	padding-left: 10px;
 	padding-bottom: 5px;
 	border-radius: 10px;
-	border: #686868;
+	border: 1px solid rgb(81, 81, 81);
 }
 
 .department_select {
@@ -416,6 +412,7 @@ u1 l1 Link {
 .d_option {
 	padding-top: 20px;
 	height: 10px;
+	border: 1px solid rgb(81, 81, 81);
 }
 
 .profession_select {
@@ -437,6 +434,7 @@ u1 l1 Link {
 	padding-left: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	border: 1px solid rgb(81, 81, 81);
 }
 
 .profession_option {
@@ -444,6 +442,7 @@ u1 l1 Link {
 	padding-left: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	border: 1px solid rgb(81, 81, 81);
 }
 
 .logo4 {
@@ -707,15 +706,18 @@ u1 l1 Link {
 
 .apply_button {
 	background-color: #3D2460;
+	margin-bottom: 10px;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
-	font-size: 15px;
-	width: 100px;
+	font-size: 10px;
 	height: 30px;
-	margin-top: 10px;
-	border-radius: 6px;
+	margin-top: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-right: 5px;
 }
+.apply_button:hover {background-color: #0091ff}
 
 .login_reserch {
 	background: rgb(46, 67, 92);
@@ -967,6 +969,13 @@ u1 l1 Link {
 	text-align: justify;
 	text-justify: inter-word;
 }
+.student_name {
+	font-size: 13px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	text-align: justify;
+	text-justify: inter-word;
+	color: #2200ff;
+}
 
 .bio_dept_img2 {
 	margin-top: 2em;
@@ -1053,34 +1062,49 @@ u1 l1 Link {
 }
 
 .accept_button {
-	width: 50%;
 	margin-bottom: 10px;
-	padding: 10px 5px 10px 5px;
-	border-radius: 10px;
 	background-color: #2f00ff;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
-	font-size: 15px;
-	margin-left: 5px;
+	font-size: 10px;
+	height: 30px;
+	margin-left: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 	margin-right: 5px;
 }
-
 .reject_button {
-	width: 65%;
-	padding: 10px 5px 10px 5px;
-	height: 45px;
-	border-radius: 10px;
+	margin-bottom: 10px;
 	background-color: #ff0000;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
-	font-size: 15px;
-	margin-left: 5px;
+	font-size: 10px;
+	height: 30px;
+	margin-left: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-right: 5px;
 }
-
+.resume_button{
+	margin-bottom: 10px;
+	background-color: #000000;
+	border: 1px solid #ddd;
+	color: white;
+	cursor: pointer;
+	font-size: 10px;
+	height: 30px;
+	margin-left: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-right: 5px;
+}
+.accept_button:hover {background-color: #0091ff}
+.reject_button:hover {background-color: #0091ff}
+.resume_button:hover {background-color: #0091ff}
 .bio_dept_img3 {
-	width: 55%;
+	width: 60%;
 	background-image: linear-gradient(rgb(255, 255, 255), rgb(176, 184, 246));
 	margin-top: 2em;
 	margin-left: 87px;
@@ -1162,60 +1186,18 @@ u1 l1 Link {
 }
 
 .delete_css {
-	width: 50%;
-	padding: 10px 5px 10px 5px;
-	border-radius: 10px;
-	background-color: #3D2460;
+	margin-bottom: 10px;
 	border: 1px solid #ddd;
 	color: white;
 	cursor: pointer;
-	font-size: 15px;
-	margin-left: 5px;
+	font-size: 10px;
+	height: 30px;
+	margin-top: 15px;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-right: 5px;
+	background-color: #3D2460;
 }
-
-table {
-	width: 100%;
-}
-
-th,
-td {
-	padding: 0.5rem;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-	font-weight: bold;
-}
-tr:nth-child(even) {
-	background-color: #ffffff;
-	border-collapse: collapse;
-  }
-  
-  th {
-	padding: 0 10px; /* adds padding to the left and right of the header text */
-	text-align: center; /* justifies the text within the header */
-  }
-  
-  th:first-child {
-	padding-left: 0; /* removes padding from the left of the first header */
-  }
-  
-  th:last-child {
-	padding-right: 0; /* removes padding from the right of the last header */
-  }
-  
-  td {
-	text-align: center;
-  }
-  
-  td.apply_button {
-	text-align: center;
-  }
-  
-  tr:hover {
-	background-color: #c5d7ff;
-  }
 .projects-container2 {
 	margin-top: -40px;
 	display: flex;
@@ -1259,3 +1241,97 @@ tr:nth-child(even) {
 	font-size: 16px;
 	font-weight: 500;
 }
+.resume_upload1{
+	margin-top: -10px;
+	margin-bottom: 20px;
+}
+.resume_see1{
+	height: 30px;
+	width: 100px;
+	border: 1px solid rgb(81, 81, 81);
+	outline: none;
+	margin-bottom: 10px;
+	background-color: #3D2460;
+	color: white;
+	border-radius: 5px;
+}
+.resume_see2{
+	background-color: #3D2460;
+	height: 30px;
+	width: 100px;
+	border: 1px solid rgb(81, 81, 81);
+	outline: none;
+	margin-left: 10px;
+	margin-bottom: 10px;
+	color: white;
+	border-radius: 5px;
+}
+.content_table{
+	border-collapse: collapse;
+	margin: 25px 0;
+	font-size: 0.9em;
+	min-width: none;
+	margin-left: 87px;
+	width: 87.3%;
+	overflow: hidden;
+	border-radius: 5px 5px 0px 0px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	font-size: 12px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.content_table thead tr{
+	background-color: white;
+	font-weight: bold;
+	font-size: 10px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.content_table tbody tr:nth-of-type(even){
+	background-color: #f3f3f3;
+}
+.content_table tbody tr:last-of-type{
+	border-bottom: 2px solid   rgb(46, 67, 92);
+}
+.profession_details93{
+	font-size: 12px;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+tr:hover {
+	background-color: #c5d7ff;
+  }
+  
+table {
+	width: 100%;
+}
+
+th,
+td {
+	padding: 0.5rem;
+	text-align: left;
+}
+
+  
+  th {
+	padding: 0 10px; /* adds padding to the left and right of the header text */
+	text-align: center;
+	background-color: white; /* justifies the text within the header */
+  }
+  
+  th:first-child {
+	padding-left: 0; /* removes padding from the left of the first header */
+  }
+  
+  th:last-child {
+	padding-right: 0; /* removes padding from the right of the last header */
+  }
+  
+  td {
+	text-align: center;
+  }
+  
+  td.apply_button {
+	text-align: center;
+  }
+  .navbar_search00{
+	margin-top: -20px;
+  }

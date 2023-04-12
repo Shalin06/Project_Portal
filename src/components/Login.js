@@ -47,7 +47,7 @@ const Login = () => {
   
       return (
         <div className="projects-container" style={{textAlign:'center'}}>
-          <h1>Projects Available</h1>
+          <h1></h1>
           <div className="projects-header">
           </div>
           <Table data={projectData} />

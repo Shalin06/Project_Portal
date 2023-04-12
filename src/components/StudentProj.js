@@ -21,8 +21,6 @@ const StudentProj = () => {
         <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}><img src="images/logo323.png" className="logo2" /></Link>
         <div className="navbar__container">
           <form className="navbar__search">
-            <input type="text" placeholder="Search for anything" className="search_input" />
-            <button type="submit" className="search_button">Search</button>
           </form>
           <ul className="navbar__links">
             <li className="o1">

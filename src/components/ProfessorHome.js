@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
-import { database,storage } from "../firebase";
-import { ref, set, off, onValue, child, get, update,remove } from "firebase/database";
-import {ref as storageref,uploadBytesResumable,getDownloadURL,deleteObject} from "firebase/storage"
+import { database, storage } from "../firebase";
+import { ref, set, off, onValue, child, get, update, remove } from "firebase/database";
+import { ref as storageref, uploadBytesResumable, getDownloadURL, deleteObject } from "firebase/storage"
 import { Link } from 'react-router-dom';
 import student1 from './student.json';
 import Lottie from "lottie-react"
-import {send} from '@sendgrid/mail'
+import { send } from '@sendgrid/mail'
 import axios from 'axios';
 
 // import {props}
@@ -16,7 +16,7 @@ const ProfessorHome = () => {
   const [showList, setShowList] = useState(false)
   const [isVisible, setVisible] = useState(false)
   const navigate = useNavigate()
-  const { user,logOut } = useUserAuth()
+  const { user, logOut } = useUserAuth()
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -26,10 +26,6 @@ const ProfessorHome = () => {
       <nav className="navbar">
         <img src="images/logo323.png" className="logo2" />
         <div className="navbar__container">
-          <form className="navbar__search">
-            <input type="text" placeholder="Search for anything" className="search_input" />
-            <button type="submit" className="search_button">Search</button>
-          </form>
           <ul className="navbar__links">
             <li>
               <Link to="/profhome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
@@ -70,7 +66,7 @@ const ProfessorHome = () => {
     set(userProjectsRef, "Rejected");
     setVisible(true)
   }
-  function handleDelete(projectid){
+  function handleDelete(projectid) {
     const data_ref = ref(database, `Projects/${projectid}`)
     remove(data_ref)
     const userProjectsRef = ref(database, `users/${user.uid}/projects/${projectid}`);
@@ -79,16 +75,16 @@ const ProfessorHome = () => {
   const sendMail = (e) => {
     e.preventDefault()
     const msg = {
-      SecureToken : "241244e5-98d5-4956-ac33-572fc4ca98cd",
-      To : 'shalin6102003@gmail.com',
-      From : 'jain.75@iitj.ac.in',
-      Subject : "This is the subject",
-      Body : "And this is the body"
-      }
-      console.log(window.Email)
-      if(window.Email){
-        window.Email.send(msg).then(()=>alert("email is sent"))
-      }
+      SecureToken: "241244e5-98d5-4956-ac33-572fc4ca98cd",
+      To: 'shalin6102003@gmail.com',
+      From: 'jain.75@iitj.ac.in',
+      Subject: "This is the subject",
+      Body: "And this is the body"
+    }
+    console.log(window.Email)
+    if (window.Email) {
+      window.Email.send(msg).then(() => alert("email is sent"))
+    }
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
@@ -115,24 +111,24 @@ const ProfessorHome = () => {
       const fileRef = storageref(storage, `${userid}/Resume`);
       try {
         await getDownloadURL(fileRef)
-        .then((url) => {
-          // `url` is the download URL for 'images/stars.jpg'
-          console.log(url)
-          // This can be downloaded directly:
-          const xhr = new XMLHttpRequest();
-          xhr.responseType = 'blob';
-          xhr.onload = (event) => {
-            const blob = xhr.response;
-          };
-          xhr.open('GET', url);
-          xhr.send();
-          window.open(url)
-          
-        })
-        .catch((error) => {
-          // Handle any errors
-          alert("No resume")
-        });
+          .then((url) => {
+            // `url` is the download URL for 'images/stars.jpg'
+            console.log(url)
+            // This can be downloaded directly:
+            const xhr = new XMLHttpRequest();
+            xhr.responseType = 'blob';
+            xhr.onload = (event) => {
+              const blob = xhr.response;
+            };
+            xhr.open('GET', url);
+            xhr.send();
+            window.open(url)
+
+          })
+          .catch((error) => {
+            // Handle any errors
+            alert("No resume")
+          });
       } catch (error) {
         console.error(error);
       }
@@ -160,14 +156,15 @@ const ProfessorHome = () => {
         if (arrapp.length > 0 && arracc.length > 0) {
           const studsapp = arrapp.map((item) =>
             <div key={item.id}>{item.nameee}
-              <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible}>Accept</button>
-              <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible}>Reject</button>
+              <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible} className="accept_button">Accept</button>
+              <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
+              <button onClick={() => handleSeeFile(item.id)} className="resume_button">Resume</button>
             </div>)
           const studsacc = arracc.map((item) =>
-            <div key={item.id}>{item.nameee}
+            <div className="student_name" key={item.id}>{item.nameee}
             </div>)
           return (
-            
+
             <div className="bio_dept_img3">
               <div className="bio_dept3">
                 <img src="images/avatar.png" className="bio_img"></img>
@@ -181,15 +178,15 @@ const ProfessorHome = () => {
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <p className="profession_details">Students Applied:{studsapp}</p>
-                  <p>Students : {studsacc}</p>
-                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
+                  <p className="profession_details">Students : {studsacc}</p>
+                  <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
           )
         } else if (arracc.length > 0 && arrapp.length == 0) {
           const studsacc = arracc.map((item) =>
-            <div key={item.id}>{item.nameee}
+            <div key={item.id} className="student_name">{item.nameee}
             </div>)
           return (
             <div className="bio_dept_img3">
@@ -204,20 +201,20 @@ const ProfessorHome = () => {
                   <p className="profession_details">Deadline: {deadline}</p>
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
-                  <p>Students : {studsacc}</p>
-                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
+                  <p className="profession_details">Students : {studsacc}</p>
+                  <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
           )
         } else if (arracc.length == 0 && arrapp.length > 0) {
           const studsapp = arrapp.map((item) =>
-            <div key={item.id}>{item.nameee}
-            <div style={{display: 'inline-flex'}}>
-              <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible} className="accept_button">Accept</button>
-              <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
-              <button onClick={() => handleSeeFile(item.id)}>See Resume</button>
-            </div>
+            <div className="profession_details" key={item.id}>{item.nameee}
+              <div style={{ display: 'inline-flex' }}>
+                <button onClick={() => handleAccept(item.id, projectid)} disabled={isVisible} className="accept_button">Accept</button>
+                <button onClick={() => handleReject(item.id, projectid)} disabled={isVisible} className="reject_button">Reject</button>
+                <button onClick={() => handleSeeFile(item.id)} className="resume_button">Resume</button>
+              </div>
             </div>)
           return (
             <div className="bio_dept_img3">
@@ -233,9 +230,9 @@ const ProfessorHome = () => {
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <div className="accept_recect">
-                    <p>Students : {studsapp}</p>
+                    <p className="profession_details">Students : {studsapp}</p>
                   </div>
-                  <button onClick={() => handleDelete(projectid)}  className="delete_css">Delete</button>
+                  <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -255,7 +252,7 @@ const ProfessorHome = () => {
                   <p className="profession_details">Deadline: {deadline}</p>
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
-                  <button onClick={() => handleDelete(projectid) } className="delete_css">Delete</button>
+                  <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
             </div>
@@ -292,27 +289,29 @@ const ProfessorHome = () => {
 
     return (
       <div className="availabel_button">
-      <div className="availabel_click">
-        <button className="a1" onClick={handleButtonClick}>
-          {showList ? "Hide My Projects" : "Show My Projects"}{" "}
-        </button>
-      </div>
-      <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
-      {showList && (
-        <div>
+        <div className="availabel_click">
+          <button className="a1" onClick={handleButtonClick}>
+            {showList ? "Hide My Projects" : "Show My Projects"}{" "}
+          </button>
+        </div  >
+        <div className="navbar__container">     <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{ marginLeft: '100px' }} />
 
-        
-        <div>
-            
-          {projectInfo
-            .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
-            .map((project) => (
-              <ProjectDetails key={project.id} {...project} />
-            ))}
-            </div>
         </div>
-      )}
-    </div>
+        {showList && (
+          <div>
+
+
+            <div>
+
+              {projectInfo
+                .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map((project) => (
+                  <ProjectDetails key={project.id} {...project} />
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
     );
   };
   return (
