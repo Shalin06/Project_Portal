@@ -1327,6 +1327,7 @@ td {
   
   td {
 	text-align: center;
+	font-size: medium;
   }
   
   td.apply_button {
@@ -1335,3 +1336,7 @@ td {
   .navbar_search00{
 	margin-top: -20px;
   }
+
+  td:first-child {
+	font-weight: 600 !important
+}

@@ -10,6 +10,7 @@ import student1 from './student.json';
 import Lottie from "lottie-react"
 import { send } from '@sendgrid/mail'
 import axios from 'axios';
+import { FaUserCircle } from 'react-icons/fa';
 
 // import {props}
 const ProfessorHome = () => {
@@ -21,6 +22,16 @@ const ProfessorHome = () => {
     await logOut()
     navigate("/")
   }
+  const [username, setusername] = useState(null);
+  useEffect(() => {
+    if(user.uid){
+      onValue(ref(database, `users/${user.uid}`), (snapshot) => {
+        const username = snapshot.val().UserName;
+        console.log('Retrieved username:', username);
+        setusername(username.toUpperCase());
+      });
+    }
+  }, [user.uid]);
   function Navbar() {
     return (
       <nav className="navbar">
@@ -31,7 +42,7 @@ const ProfessorHome = () => {
               <Link to="/profhome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li>
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
+              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/>{username}</Link>
             </li>
             <li>
               <Link to="/ProfProject" style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link>

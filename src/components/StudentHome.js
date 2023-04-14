@@ -3,13 +3,14 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, set, onValue, off, child } from "firebase/database";
+import { ref, set, onValue, off, child,get } from "firebase/database";
 import { Link } from 'react-router-dom';
 import student from './student.json';
 import Lottie from "lottie-react"
+import { FaUserCircle } from 'react-icons/fa';
 const StudentHome = () => {
   const navigate = useNavigate()
-  const { logOut } = useUserAuth()
+  const { logOut,user } = useUserAuth()
   const [items, setItems] = useState([])
   const [showAccList, setAccShowList] = useState(false);
   const [showAppList, setAppShowList] = useState(false);
@@ -17,7 +18,18 @@ const StudentHome = () => {
     await logOut()
     navigate("/")
   }
-  function Navbar() {
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    if(user.uid){
+      onValue(ref(database, `users/${user.uid}`), (snapshot) => {
+        const username = snapshot.val().UserName;
+        console.log('Retrieved username:', username);
+        setUsername(username.toUpperCase());
+      });
+    }
+  }, [user.uid]);
+   function Navbar() {
     return (
       <nav className="navbar">
         <img src="images/logo323.png" className="logo2" />
@@ -29,7 +41,7 @@ const StudentHome = () => {
               <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li>
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
+              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/> {username}</Link>
             </li>
             <li>
               <Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link>

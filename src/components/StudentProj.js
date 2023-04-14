@@ -5,12 +5,22 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
 import { ref, set, get, onValue, update, child } from "firebase/database";
 import { Link } from 'react-router-dom';
+import { FaUserCircle } from 'react-icons/fa';
 const StudentProj = () => {
   const [showList, setShowList] = useState(false);
   const navigate = useNavigate()
   const { logOut, user } = useUserAuth()
   const [isVisible, setVisible] = useState(false)
-
+  const [username, setUsername] = useState(null);
+  useEffect(() => {
+    if(user.uid){
+      onValue(ref(database, `users/${user.uid}`), (snapshot) => {
+        const username = snapshot.val().UserName;
+        console.log('Retrieved username:', username);
+        setUsername(username.toUpperCase());
+      });
+    }
+  }, [user.uid]);
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
@@ -27,7 +37,7 @@ const StudentProj = () => {
               <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li className="o2">
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
+              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/> {username}</Link>
             </li>
             <li className="o3">
               <Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link>

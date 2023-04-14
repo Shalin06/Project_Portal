@@ -9,7 +9,7 @@ import { database, storage } from "../firebase";
 import { Link} from "react-router-dom";
 import detail from './deatil.json';
 import Lottie from "lottie-react"
-
+import { FaUserCircle } from 'react-icons/fa';
 const Details = () => {
   const { user } = useUserAuth();
   const navigate = useNavigate();
@@ -43,6 +43,16 @@ const Form = () => {
   const [UserName, setUsername] = useState('');
   const [Department, setDepartment] = useState('');
   const [Profession, setProfession] = useState('');
+  const [username, setusername] = useState(null);
+  useEffect(() => {
+    if(user.uid){
+      onValue(ref(database, `users/${user.uid}`), (snapshot) => {
+        const username = snapshot.val().UserName;
+        console.log('Retrieved username:', username);
+        setusername(username.toUpperCase());
+      });
+    }
+  }, [user.uid]);
   useEffect(() => {
     const userRef = ref(database,'users/'+ user.uid);
     if(user.uid){
@@ -78,7 +88,7 @@ const Form = () => {
               <li><Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link></li> 
              )} 
             <li>
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
+              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/> {username}</Link>
             </li>
             {Profession === 'Professor' ? (
               <li><Link to="/profProject" style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link></li>) :

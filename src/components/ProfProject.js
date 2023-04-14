@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router";
 import { useUserAuth } from "../context/UserAuthContext";
@@ -7,11 +7,21 @@ import {ref,set,push,onValue,update, get,child} from "firebase/database";
 import { Link } from 'react-router-dom';
 import { auth } from "../firebase";
 import { async } from "@firebase/util";
+import { FaUserCircle } from 'react-icons/fa';
 const ProfProject = () =>{
-
+const [username, setusername] = useState(null);
+const {user,logOut} = useUserAuth()
+useEffect(() => {
+  if(user.uid){
+    onValue(ref(database, `users/${user.uid}`), (snapshot) => {
+      const username = snapshot.val().UserName;
+      console.log('Retrieved username:', username);
+      setusername(username.toUpperCase());
+    });
+  }
+}, [user.uid]);
 function Navbar() {
   const navigate = useNavigate()
-  const {logOut} = useUserAuth()
     const handleLogout = async(e) =>{
       await logOut()
       navigate("/")
@@ -27,7 +37,7 @@ function Navbar() {
               <Link to="/profhome"style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
             </li>
             <li>
-              <Link to="/Details"style={{ textDecoration: 'none', color: 'black' }}>Details</Link>
+              <Link to="/Details"style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/>{username}</Link>
             </li>
             <li>
               <Link to="/ProfProject"style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link>
