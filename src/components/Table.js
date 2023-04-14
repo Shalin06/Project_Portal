@@ -125,8 +125,9 @@ function Table({ data }) {
           placeholder="Search Department"
         />
       </form>
-      <table cellSpacing="0" className='content_table'>
-        <thead>
+      <div className='table_container'>
+      <table className='content_table'>
+        <thead style={{position: "relative",textalign: "center"}}>
           <tr>
             {columns.map((colName, index) => (
               <th  className='profession_details93' key={index} onClick={() => handleSort(colName)}>
@@ -164,6 +165,7 @@ function Table({ data }) {
           ))}
         </tbody>
       </table>
+      </div>
       </>
   );
 }

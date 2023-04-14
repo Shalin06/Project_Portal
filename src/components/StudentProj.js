@@ -88,7 +88,7 @@ const StudentProj = () => {
       <div className="availabel_button">
       <div className="availabel_click">
         <button className="a1" onClick={handleButtonClick}>
-          {showList ? "Hide My Projects" : "Show My Projects"}{" "}
+          {showList ? "Hide Projects" : "Show Projects"}{" "}
         </button>
       </div>
       <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
