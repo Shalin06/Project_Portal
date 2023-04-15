@@ -45,15 +45,6 @@ const Form = () => {
   const [Profession, setProfession] = useState('');
   const [username, setusername] = useState(null);
   useEffect(() => {
-    if(user.uid){
-      onValue(ref(database, `users/${user.uid}`), (snapshot) => {
-        const username = snapshot.val().UserName;
-        console.log('Retrieved username:', username);
-        setusername(username.toUpperCase());
-      });
-    }
-  }, [user.uid]);
-  useEffect(() => {
     const userRef = ref(database,'users/'+ user.uid);
     if(user.uid){
       async function getdata() {
@@ -63,6 +54,15 @@ const Form = () => {
               setUsername(snapshot.val().UserName);
               setDepartment(snapshot.val().Department);
               setProfession(snapshot.val().Profession);
+              if(user.uid){
+                onValue(ref(database, `users/${user.uid}/UserName`), (snapshot) => {
+                  if(snapshot.exists){
+                    const username = snapshot.val();
+                    console.log('Retrieved username:', username);
+                    setusername(username.toUpperCase());
+                  }
+                });
+              }
             }
           }
         });
@@ -173,7 +173,8 @@ const UploadFile = async(event) => {
         }
       },
       () => {
-        setFileUploaded(true);
+        alert("resume uploaded")
+        // setFileUploaded(true);
       }
     );
 };

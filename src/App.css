@@ -272,7 +272,7 @@ body {
 
 .signup_input {
 	border: 1px solid #bdbdbd;
-	color: white;
+	color: rgb(0, 0, 0);
 	cursor: pointer;
 	font-size: 15px;
 	margin-top: 15px;
