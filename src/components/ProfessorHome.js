@@ -267,8 +267,8 @@ const ProfessorHome = () => {
                   <p className="profession_details">Students Applied:{studsapp}</p>
                   <p className="profession_details">Students : {studsacc}</p>
                   {((isInChat !== projectid) || !showchat) && (
-                  <div className="room">
-                    <button onClick={() => handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  <div>
+                    <button className="room" onClick={() => handleshowchat(projectid,projectName)}>Enter Chat</button>
                   </div>
                     )}
                   <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
