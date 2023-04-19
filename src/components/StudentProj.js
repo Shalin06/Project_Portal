@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
 import { ref, set, get, onValue, update, child } from "firebase/database";
@@ -13,7 +13,7 @@ const StudentProj = () => {
   const [isVisible, setVisible] = useState(false)
   const [username, setUsername] = useState(null);
   useEffect(() => {
-    if(user.uid){
+    if (user.uid) {
       onValue(ref(database, `users/${user.uid}`), (snapshot) => {
         const username = snapshot.val().UserName;
         console.log('Retrieved username:', username);
@@ -28,19 +28,19 @@ const StudentProj = () => {
   function Navbar() {
     return (
       <nav className="navbar">
-        <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}><img src="images/logo323.png" className="logo2" /></Link>
+        <Link to="/studenthome"><img src="images/logo323.png" className="logo22" /></Link>
         <div className="navbar__container">
           <form className="navbar__search">
           </form>
           <ul className="navbar__links">
             <li className="o1">
-              <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
+              <Link to="/studenthome" style={{ textDecoration: 'none' }} className="hover1">Home</Link>
             </li>
             <li className="o2">
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/> {username}</Link>
+              <Link to="/Details" style={{ textDecoration: 'none' }} className="hover1"><FaUserCircle /> {username}</Link>
             </li>
             <li className="o3">
-              <Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link>
+              <Link to="/StudentProj" style={{ textDecoration: 'none' }} className="hover1">Available Projects</Link>
             </li>
             <li>
               <Button onClick={handleLogout} className="logout"> Log out</Button>
@@ -86,27 +86,27 @@ const StudentProj = () => {
     }
     return (
       <div className="availabel_button">
-      <div className="availabel_click">
-        <button className="a1" onClick={handleButtonClick}>
-          {showList ? "Hide Projects" : "Show Projects"}{" "}
-        </button>
-      </div>
-      <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{marginLeft:'100px'}}/>
-      {showList && (
-        <div>
-
-        
-        <div>
-            
-          {projectInfo
-            .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
-            .map((project) => (
-              <ProjectDetails key={project.id} {...project} />
-            ))}
-            </div>
+        <div className="availabel_click2">
+          <button className="a1" onClick={handleButtonClick}>
+            {showList ? "Hide Available Projects" : "Show Available Projects"}{" "}
+          </button>
         </div>
-      )}
-    </div>
+        <input className="project_search" type="text" placeholder="Search projects..." onChange={handleInputChange} />
+        {showList && (
+          <div>
+
+
+            <div>
+
+              {projectInfo
+                .filter((project) => project.projectName.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map((project) => (
+                  <ProjectDetails key={project.id} {...project} />
+                ))}
+            </div>
+          </div>
+        )}
+      </div>
     );
   }
   function addthestudenttoproject(projectid) {
@@ -145,14 +145,14 @@ const StudentProj = () => {
             <p className="profession_details">Offered to: {department}</p>
             <p className="profession_details">Deadline: {deadline}</p>
             <p className="profession_details">Remark: {remark}</p>
-        {(
-          <button className="apply_button" onClick={handleapplyclick} disabled={isVisible}>
-            Apply
-          </button>
-        )}
-      </div>
-      </div>
+            {(
+              <button className="apply_button" onClick={handleapplyclick} disabled={isVisible}>
+                Apply
+              </button>
+            )}
+          </div>
         </div>
+      </div>
     );
   }
 

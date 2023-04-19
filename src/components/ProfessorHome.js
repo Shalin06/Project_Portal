@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database, storage } from "../firebase";
 import { ref, set, off, onValue, child, get, update, remove } from "firebase/database";
@@ -11,11 +11,20 @@ import Lottie from "lottie-react"
 import { send } from '@sendgrid/mail'
 import axios from 'axios';
 import { FaUserCircle } from 'react-icons/fa';
+import PopupWindow from "./ProjectPopUp";
+import { Chat } from "./Chat";
+import ReactDOM from "react-dom";
+
 
 // import {props}
 const ProfessorHome = () => {
   const [showList, setShowList] = useState(false)
   const [isVisible, setVisible] = useState(false)
+  const [project, setProject] = useState({});
+  const [showPopup, setShowPopup] = useState(false);
+  const [showchat,setshowchat] = useState(false)
+  const [isInChat, setIsInChat] = useState(null);
+  const [isInProject,setisInProject] = useState(null);
   const navigate = useNavigate()
   const { user, logOut } = useUserAuth()
   const handleLogout = async (e) => {
@@ -35,17 +44,17 @@ const ProfessorHome = () => {
   function Navbar() {
     return (
       <nav className="navbar">
-        <img src="images/logo323.png" className="logo2" />
+        <img src="images/logo323.png" className="logo22" />
         <div className="navbar__container">
           <ul className="navbar__links">
             <li>
-              <Link to="/profhome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
+              <Link to="/profhome" style={{ textDecoration: 'none' }} className="hover1">Home</Link>
             </li>
             <li>
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/>{username}</Link>
+              <Link to="/Details" style={{ textDecoration: 'none' }} className="hover1"><FaUserCircle/>{username}</Link>
             </li>
             <li>
-              <Link to="/ProfProject" style={{ textDecoration: 'none', color: 'black' }}>Add Projects</Link>
+              <Link to="/ProfProject" style={{ textDecoration: 'none' }} className="hover1">Add Projects</Link>
             </li>
             <li>
               <Button onClick={handleLogout} className="logout"> Log out</Button>
@@ -56,7 +65,62 @@ const ProfessorHome = () => {
       </nav>
     );
   }
-
+  const handleEdit = async (projectid) => {
+    // Get project details from firebase using projectid
+    setisInProject(projectid)
+    const projectDetails = {}
+    await get(ref(database,"Projects/"+ projectid)).then((snapshot)=>{
+      projectDetails["projectName"]  = snapshot.val().projectName;
+      projectDetails["deadline"]  = snapshot.val().deadline;
+      projectDetails["remark"]  = snapshot.val().remark;
+      projectDetails["department"]  = snapshot.val().department;
+      projectDetails["numStudents"]  = snapshot.val().numStudents;
+      projectDetails["projectid"] = snapshot.val().projectid
+    });
+    setProject(projectDetails);
+    setShowPopup(true);
+  };
+  const handleSave = async (updatedProject) => {
+    // Save updated project details to firebase
+    var vac = 0
+    await get(ref(database,"Projects/"+ updatedProject.projectid)).then((snapshot) => {
+      const dif = parseInt(snapshot.val().numStudents) - parseInt(snapshot.val().vacancy)
+      vac = parseInt(updatedProject.Numberofstudents) - dif
+    })
+    await update(ref(database, "Projects/" + updatedProject.projectid), {
+      projectName: updatedProject.title,
+      deadline: updatedProject.dueDate,
+      remark: updatedProject.remark,
+      department: updatedProject.department,
+      numStudents: updatedProject.Numberofstudents,
+      vacancy: vac,
+    });
+    alert("Project Updated")
+    setProject(updatedProject);
+  };
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+  function handleCloseChat() {
+    setIsInChat(null);
+    setshowchat(false);
+  }
+  const handleshowchat = (projectid,projectName) => {
+    const chatWindow = window.open("", "Chat Window", "width=600,height=800");
+    chatWindow.document.body.innerHTML = "<div id='chat-root'></div>";
+    chatWindow.onbeforeunload = () => {
+      handleCloseChat()
+    }
+    const targetContainer = chatWindow.document.getElementById("chat-root");
+    setIsInChat(projectid)
+    setshowchat(true)
+    ReactDOM.render(
+      <Chat
+        room={projectName}
+      />,
+      targetContainer
+    );  
+  }
   function handleAccept(userid, projectid) {
     const data_ref = ref(database, `Projects/${projectid}/Students`)
     set(child(data_ref, `${userid}/status`), "Accepted")
@@ -68,6 +132,19 @@ const ProfessorHome = () => {
       val = parseInt(snapshot.val())
     })
     set(vacref, val - 1)
+    setVisible(true)
+  }
+  function handleRemoved(userid,projectid){
+    const data_ref = ref(database, `Projects/${projectid}/Students`)
+    set(child(data_ref, `${userid}/status`), "Removed")
+    const userProjectsRef = ref(database, `users/${userid}/projects/${projectid}`);
+    set(userProjectsRef, "Removed");
+    const vacref = ref(database, `Projects/${projectid}/vacancy`)
+    var val = 0
+    onValue(vacref, (snapshot) => {
+      val = parseInt(snapshot.val())
+    })
+    set(vacref, val + 1)
     setVisible(true)
   }
   function handleReject(userid, projectid) {
@@ -99,7 +176,6 @@ const ProfessorHome = () => {
   }
   const MyProjects = () => {
     const [projectInfo, setProjectInfo] = useState([]);
-    const [studentsApplied, setStudentsApplied] = useState([])
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = useUserAuth();
     useEffect(() => {
@@ -173,10 +249,10 @@ const ProfessorHome = () => {
             </div>)
           const studsacc = arracc.map((item) =>
             <div className="student_name" key={item.id}>{item.nameee}
+            <button onClick={() => handleRemoved(item.id, projectid)} disabled={isVisible} className="reject_button">Remove</button>
             </div>)
           return (
-
-            <div className="bio_dept_img3">
+            <div className="HOME_PAGE_PROF">           <div className="bio_dept_img3">
               <div className="bio_dept3">
                 <img src="images/avatar.png" className="bio_img"></img>
                 <div className="title_bio3">
@@ -190,14 +266,25 @@ const ProfessorHome = () => {
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <p className="profession_details">Students Applied:{studsapp}</p>
                   <p className="profession_details">Students : {studsacc}</p>
+                  {((isInChat !== projectid) || !showchat) && (
+                  <div className="room">
+                    <button onClick={() => handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  </div>
+                    )}
+                  <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
+                  {((isInProject === projectid) && showPopup) && (
+                    <PopupWindow project={project} onSave={handleSave} onClose={handleClosePopup} />
+                  )}
                   <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
+            </div>
             </div>
           )
         } else if (arracc.length > 0 && arrapp.length == 0) {
           const studsacc = arracc.map((item) =>
             <div key={item.id} className="student_name">{item.nameee}
+            <button onClick={() => handleRemoved(item.id, projectid)} disabled={isVisible} className="reject_button">Remove</button>
             </div>)
           return (
             <div className="bio_dept_img3">
@@ -213,6 +300,15 @@ const ProfessorHome = () => {
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
                   <p className="profession_details">Students : {studsacc}</p>
+                  {((isInChat !== projectid) || !showchat) && (
+                  <div>
+                    <button  className="room" onClick={() =>  handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  </div>
+                    )}
+                  <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
+                  {((isInProject === projectid) && showPopup) && (
+                    <PopupWindow project={project} onSave={handleSave} onClose={handleClosePopup} />
+                  )}
                   <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
@@ -243,6 +339,15 @@ const ProfessorHome = () => {
                   <div className="accept_recect">
                     <p className="profession_details">Students : {studsapp}</p>
                   </div>
+                  {((isInChat !== projectid) || !showchat) && (
+                  <div >
+                    <button  className="room" onClick={() =>  handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  </div>
+                    )}
+                  <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
+                  {((isInProject === projectid) && showPopup) && (
+                    <PopupWindow project={project} onSave={handleSave} onClose={handleClosePopup} />
+                  )}
                   <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
@@ -263,6 +368,15 @@ const ProfessorHome = () => {
                   <p className="profession_details">Deadline: {deadline}</p>
                   <p className="profession_details">Remark: {remark}</p>
                   <p className="profession_details">Vacancy : {vacancy}</p>
+                  {((isInChat !== projectid) || !showchat) && (
+                  <div >
+                    <button  className="room" onClick={() =>  handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  </div>
+                    )}
+                  <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
+                  {((isInProject === projectid) && showPopup) && (
+                    <PopupWindow project={project} onSave={handleSave} onClose={handleClosePopup} />
+                  )}
                   <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
                 </div>
               </div>
@@ -283,6 +397,15 @@ const ProfessorHome = () => {
                 <p className="profession_details">Offered to: {department}</p>
                 <p className="profession_details">Deadline: {deadline}</p>
                 <p className="profession_details">Remark: {remark}</p>
+                {((isInChat !== projectid) || !showchat) && (
+                  <div>
+                    <button className="room" onClick={() =>  handleshowchat(projectid,projectName)}>Enter Chat</button>
+                  </div>
+                    )}
+                <button onClick={() => handleEdit(projectid)}className="delete_css">Edit Project</button>
+                  {((isInProject === projectid) && showPopup) && (
+                    <PopupWindow project={project} onSave={handleSave} onClose={handleClosePopup} />
+                  )}
                 <button onClick={() => handleDelete(projectid)} className="delete_css">Delete</button>
               </div>
             </div>
@@ -305,13 +428,11 @@ const ProfessorHome = () => {
             {showList ? "Hide My Projects" : "Show My Projects"}{" "}
           </button>
         </div  >
-        <div className="navbar__container">     <input className="search_input" type="text" placeholder="Search projects..." onChange={handleInputChange} style={{ marginLeft: '100px' }} />
+        <div>     <input  type="text"  className="project_search" placeholder="Search projects..." onChange={handleInputChange}  />
 
         </div>
         {showList && (
           <div>
-
-
             <div>
 
               {projectInfo
@@ -329,10 +450,10 @@ const ProfessorHome = () => {
     <>
       <Navbar />
       <MyProjects />
-      <div style={{ width: "40%", marginLeft: '820px', marginTop: '50px' }}>
-        <Lottie loop={true} animationData={student1} className="animation2" />
-      </div>
       <div className="row3">
+      <div className="animation_home" >
+        <Lottie loop={true} animationData={student1} className="animation_new"/>
+      </div>
         <div className="col5">
           <p className="col6">Learning is a treasure that will</p>
           <p className="col6">follow its owner everywhere</p>

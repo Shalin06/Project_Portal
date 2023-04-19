@@ -108,7 +108,7 @@ function Table({ data }) {
       <form className="navbar_search00">
         <input
           style={{ marginBottom: '10px',marginRight:'10px'}}
-          className='search_input'
+          className='search_input1'
           type="text"
           name="project"
           value={searchQueries.project}
@@ -117,7 +117,7 @@ function Table({ data }) {
         />
         <input
         style={{ marginBottom: '10px',marginRight:'10px'}}
-         className='search_input'
+         className='search_input2'
           type="text"
           name="department"
           value={searchQueries.department}
@@ -125,9 +125,8 @@ function Table({ data }) {
           placeholder="Search Department"
         />
       </form>
-      <div className='table_container'>
-      <table className='content_table'>
-        <thead style={{position: "relative",textalign: "center"}}>
+      <table cellSpacing="0" className='content_table'>
+        <thead>
           <tr>
             {columns.map((colName, index) => (
               <th  className='profession_details93' key={index} onClick={() => handleSort(colName)}>
@@ -165,7 +164,6 @@ function Table({ data }) {
           ))}
         </tbody>
       </table>
-      </div>
       </>
   );
 }

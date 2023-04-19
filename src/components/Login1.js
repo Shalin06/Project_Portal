@@ -5,7 +5,7 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, onValue,set } from "firebase/database";
+import { ref, onValue, set } from "firebase/database";
 import { auth } from "../firebase";
 import study from './study.json';
 import Lottie from "lottie-react"
@@ -16,20 +16,20 @@ const Login1 = () => {
         const navigate = useNavigate()
         return (
             <nav className="navbar">
-                <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+                <Link to="/"><img src="images/logo323.png" className="logo22" /></Link>
                 <div className="navbar__container">
                     <ul className="navbar__links">
                         <li>
-                            <Link to="/faculty" style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+                            <Link to="/faculty" style={{ textDecoration: 'none' }} className="hover1">Faculty</Link>
                         </li>
                         <li>
-                            <Link to="/research" style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+                            <Link to="/research" style={{ textDecoration: 'none' }} className="hover1">Research</Link>
                         </li>
                         <li>
-                            <Link to="/login1" style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+                            <Link to="/login1" style={{ textDecoration: 'none' }} className="hover1">Login</Link>
                         </li>
                         <li>
-                            <Link to="/signup" style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+                            <Link to="/signup" style={{ textDecoration: 'none' }} className="hover1">Sign Up</Link>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +49,7 @@ const Login1 = () => {
             await logIn(email, password);
             const user = auth.currentUser;
             if (user) {
-                
+
                 const data_ref = ref(database, "users/" + user.uid);
                 onValue(data_ref, (snapshot) => {
                     if (snapshot.exists()) {
@@ -82,7 +82,7 @@ const Login1 = () => {
             await googleSignIn();
             const user = auth.currentUser;
             if (user) {
-                
+
                 const data_ref = ref(database, "users/" + user.uid);
                 onValue(data_ref, async (snapshot) => {
                     if (snapshot.exists()) {
@@ -95,7 +95,7 @@ const Login1 = () => {
                     } else {
                         await set(ref(database, "users/" + user.uid), {
                             email: email
-                          })
+                        })
                         navigate("/details");
                     }
                 });
@@ -143,21 +143,21 @@ const Login1 = () => {
                                     <Button variant="primary" type="Submit" className="LoginButton">
                                         Login
                                     </Button>
-                                    <div  style={{alignItems:"center",marginTop:"20px",width:"40%"}}>
-                                    <GoogleButton   
-                                        type="dark"
-                                        label="Sign in with Google"
-                                        onClick={handleGoogleSignIn}
-                                    />
+                                    <div className="google_btn">
+                                        <GoogleButton
+                                            type="dark"
+                                            label="Sign in with Google"
+                                            onClick={handleGoogleSignIn}
+                                        />
                                     </div>
                                 </div>
                             </Form>
                         </nav>
                     </div>
                 </div>
-                <div style={{ width: "30%", marginLeft: '250px', marginTop: '-400px' }}>
-          <Lottie loop={true} animationData={study} classname="animation2" />
-        </div>
+                <div className="animation2">
+                    <Lottie loop={true} animationData={study} />
+                </div>
             </body>
         </>
     );

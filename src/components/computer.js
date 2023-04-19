@@ -6,28 +6,28 @@ const CS = () => {
     return (
       <nav>
         <div className="navbar">
-          <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+          <Link to="/"><img src="images/logo323.png" className="logo22" /></Link>
           <div className="navbar__container">
             <ul className="navbar__links">
               <li>
-                <Link to="/faculty" style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+                <Link to="/faculty" style={{ textDecoration: 'none' }} className="hover1">Faculty</Link>
               </li>
               <li>
-                <Link to="/research" style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+                <Link to="/research" style={{ textDecoration: 'none' }} className="hover1">Research</Link>
               </li>
               <li>
-                <Link to="/login1" style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+                <Link to="/login1" style={{ textDecoration: 'none' }} className="hover1">Login</Link>
               </li>
               <li>
-                <Link to="/signup" style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+                <Link to="/signup" style={{ textDecoration: 'none' }} className="hover1">Sign Up</Link>
               </li>
             </ul>
           </div>
         </div>
         <div className="faculty_members">
-                <p className="text_font6">Faculty Members</p>
-                <h className = "text_font7">Head</h>
-              </div>
+          <p className="text_font6">Faculty Members</p>
+          <h className="text_font7">Head</h>
+        </div>
       </nav>
     );
   }
@@ -35,6 +35,7 @@ const CS = () => {
     <body>
       <div className="bio_dept_img">
         <Navbar />
+        <header className="bio_Dept_faculty0">
         <div className="bio_dept_img1">
           <div className="bio_dept">
             <img src="images/cs_1.jpg" className="bio_img"></img>
@@ -48,9 +49,11 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
         <div className="faculty_members">
-                <h className = "text_font7">Faculty Members</h>
+          <h className="text_font7">Faculty Members</h>
         </div>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_2.jpg" className="bio_img"></img>
@@ -64,6 +67,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_3.png" className="bio_img"></img>
@@ -77,7 +82,8 @@ const CS = () => {
             </div>
           </div>
         </div>
-
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_4.jpg" className="bio_img"></img>
@@ -91,6 +97,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_5.jpg" className="bio_img"></img>
@@ -104,7 +112,9 @@ const CS = () => {
             </div>
           </div>
         </div>
-            <div className="bio_dept_img2">
+        </header>
+        <header className="bio_Dept_faculty1">
+        <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_6.jpg" className="bio_img"></img>
             <div className="title_bio">
@@ -117,6 +127,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_7.jpg" className="bio_img"></img>
@@ -130,6 +142,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_8.jpg" className="bio_img"></img>
@@ -143,6 +157,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_9.png" className="bio_img"></img>
@@ -156,6 +172,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_10.jpeg" className="bio_img"></img>
@@ -169,6 +187,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_11.png" className="bio_img"></img>
@@ -182,6 +202,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_12.jpg" className="bio_img"></img>
@@ -195,6 +217,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_13.jpg" className="bio_img"></img>
@@ -208,6 +232,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_14.jpg" className="bio_img"></img>
@@ -221,6 +247,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_15.jpg" className="bio_img"></img>
@@ -233,6 +261,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_16.jpg" className="bio_img"></img>
@@ -246,6 +276,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_17.jpg" className="bio_img"></img>
@@ -259,6 +291,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_18.jpg" className="bio_img"></img>
@@ -272,6 +306,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_19.png" className="bio_img"></img>
@@ -285,6 +321,8 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
+        <header className="bio_Dept_faculty1">
         <div className="bio_dept_img2">
           <div className="bio_dept">
             <img src="images/cs_20.jpeg" className="bio_img"></img>
@@ -298,13 +336,14 @@ const CS = () => {
             </div>
           </div>
         </div>
+        </header>
         <div className="bio_container">
           <div className="bio_reserch">
             <h11 className="bio_h11">
               Indian Institute Of Technology Jodhpur
             </h11>
           </div>
-          </div>
+        </div>
       </div>
     </body>
   );

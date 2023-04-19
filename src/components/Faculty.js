@@ -6,20 +6,20 @@ const Faculty = () => {
           return (
             <nav>
               <div className="navbar">
-               <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+               <Link to="/"><img src="images/logo323.png" className="logo22" /></Link>
               <div className="navbar__container">
                 <ul className="navbar__links">
                   <li>
-                    <Link to="/faculty"style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+                    <Link to="/faculty"style={{ textDecoration: 'none'}} className="hover1">Faculty</Link>
                   </li>
                   <li>
-                    <Link to="/research"style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+                    <Link to="/research"style={{ textDecoration: 'none'}} className="hover1">Research</Link>
                   </li>
                   <li>
-                    <Link to="/login1"style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+                    <Link to="/login1"style={{ textDecoration: 'none' }} className="hover1">Login</Link>
                   </li>
                   <li>
-                    <Link to="/signup"style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+                    <Link to="/signup"style={{ textDecoration: 'none' }} className="hover1">Sign Up</Link>
                   </li>
                 </ul>
               </div>
@@ -49,13 +49,7 @@ const Faculty = () => {
                   <Link to="/electrical"style={{ textDecoration: 'none', color: 'black' }}className="text_font3">6.	Electrical Engineering</Link>
                   </l1>
                   <l1>
-                  <Link to="/libral_arts"style={{ textDecoration: 'none', color: 'black' }}className="text_font3">7.	School of Liberal Arts,</Link>
-                  </l1>
-                  <l1>
-                  <Link to="/math"style={{ textDecoration: 'none', color: 'black' }}className="text_font3">8.	Mathematics</Link>
-                  </l1>
-                  <l1>
-                  <Link to="/metelorgy"style={{ textDecoration: 'none', color: 'black' }}className="text_font3">9.	Mechanical Engineering</Link>
+                  <Link to="/material"style={{ textDecoration: 'none', color: 'black' }}className="text_font3">7.	Mechanical Engineering</Link>
                   </l1>
                 </u1>
               </div>

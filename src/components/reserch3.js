@@ -5,20 +5,20 @@ const Research3 = () => {
     function Navbar() {
           return (
             <nav className="navbar">
-               <Link to="/"><img src="images/logo323.png" className="logo2" /></Link>
+               <Link to="/"><img src="images/logo323.png" className="logo22" /></Link>
               <div className="navbar__container">
                 <ul className="navbar__links">
                   <li>
-                    <Link to="/faculty"style={{ textDecoration: 'none', color: 'black' }}>Faculty</Link>
+                    <Link to="/faculty"style={{ textDecoration: 'none'}}className="hover1">Faculty</Link>
                   </li>
                   <li>
-                    <Link to="/research"style={{ textDecoration: 'none', color: 'black' }}>Research</Link>
+                    <Link to="/research"style={{ textDecoration: 'none'}}className="hover1">Research</Link>
                   </li>
                   <li>
-                    <Link to="/login1"style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+                    <Link to="/login1"style={{ textDecoration: 'none'}}className="hover1">Login</Link>
                   </li>
                   <li>
-                    <Link to="/signup"style={{ textDecoration: 'none', color: 'black' }}>Sign Up</Link>
+                    <Link to="/signup"style={{ textDecoration: 'none'}}className="hover1">Sign Up</Link>
                   </li>
                 </ul>
               </div>
@@ -41,7 +41,6 @@ const Research3 = () => {
                         <p>
                         <p className="text_font8">Article written by:  V. Narayanan </p>
                         <p className="text_font8">Image Credits:  Sanjoy Chatterjee and Pedamallu VVNSP Raju  </p>
-                        <p className="text_font8">Link to the present work: https://cms2019.solarpacesconference.org/file/display_attachment/5e064125a7dbe4e5323c89c0962063d?filename=Sanjoy+Chatt erjee+-+Paper.pdf </p>
                         <p className="text_font8">Research Domain: Lasers and Optics  </p>
                         </p>
                     </div>

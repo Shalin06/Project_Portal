@@ -1,27 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/UserAuthContext";
 import { database } from "../firebase";
-import { ref, set, onValue, off, child,get } from "firebase/database";
+import { ref, set, onValue, off, child, get } from "firebase/database";
 import { Link } from 'react-router-dom';
 import student from './student.json';
 import Lottie from "lottie-react"
 import { FaUserCircle } from 'react-icons/fa';
+import { Chat } from "./Chat";
+import ReactDOM from "react-dom";
 const StudentHome = () => {
   const navigate = useNavigate()
-  const { logOut,user } = useUserAuth()
+  const { logOut, user } = useUserAuth()
   const [items, setItems] = useState([])
   const [showAccList, setAccShowList] = useState(false);
   const [showAppList, setAppShowList] = useState(false);
+  const [isInChat, setIsInChat] = useState(null);
+  const [showchat, setshowchat] = useState(false)
   const handleLogout = async (e) => {
     await logOut()
     navigate("/")
   }
   const [username, setUsername] = useState(null);
-
+  function handleCloseChat() {
+    setIsInChat(null);
+    setshowchat(false);
+  }
+  const handleshowchat = (projectid, projectName) => {
+    const chatWindow = window.open("", "Chat Window", "width=600,height=800");
+    chatWindow.document.body.innerHTML = "<div id='chat-root'></div>";
+    chatWindow.onbeforeunload = () => {
+      handleCloseChat()
+    }
+    const targetContainer = chatWindow.document.getElementById("chat-root");
+    setIsInChat(projectid)
+    setshowchat(true)
+    ReactDOM.render(
+      <Chat
+        room={projectName}
+      />,
+      targetContainer
+    );
+  }
   useEffect(() => {
-    if(user.uid){
+    if (user.uid) {
       onValue(ref(database, `users/${user.uid}`), (snapshot) => {
         const username = snapshot.val().UserName;
         console.log('Retrieved username:', username);
@@ -29,22 +52,22 @@ const StudentHome = () => {
       });
     }
   }, [user.uid]);
-   function Navbar() {
+  function Navbar() {
     return (
       <nav className="navbar">
-        <img src="images/logo323.png" className="logo2" />
+        <img src="images/logo323.png" className="logo22" />
         <div className="navbar__container">
           <form className="navbar__search">
           </form>
           <ul className="navbar__links">
             <li>
-              <Link to="/studenthome" style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
+              <Link to="/studenthome" style={{ textDecoration: 'none' }} className="hover1">Home</Link>
             </li>
             <li>
-              <Link to="/Details" style={{ textDecoration: 'none', color: 'black' }}><FaUserCircle/> {username}</Link>
+              <Link to="/Details" style={{ textDecoration: 'none' }} className="hover1"><FaUserCircle /> {username}</Link>
             </li>
             <li>
-              <Link to="/StudentProj" style={{ textDecoration: 'none', color: 'black' }}>Available Projects</Link>
+              <Link to="/StudentProj" style={{ textDecoration: 'none' }} className="hover1">Available Projects</Link>
             </li>
             <li>
               <Button onClick={handleLogout} className="logout"> Log out</Button>
@@ -135,14 +158,17 @@ const StudentHome = () => {
               <p className="profession_details">Remark: {remark}</p>
               <p className="profession_details">Vacancy: {vacancy}</p>
               <p className="profession_details">Status: Accepted</p>
+              <div>
+                <button  className="room" onClick={() => handleshowchat(projectid, projectName)}>Enter Chat</button>
+              </div>
             </div>
           </div>
         </div>
       );
     }
     return (
-      <div classname="availabel_button">
-        <div className="availabel_click">
+      <div classname="availabel_button2">
+        <div className="availabel_click2">
           <button className="a1"
             onClick={handleButtonClickApp} >{showAppList ? 'Hide Applied Projects' : 'Show Applied Projects'} </button>
         </div>
@@ -153,7 +179,7 @@ const StudentHome = () => {
             ))}
           </div>
         )}
-        <div className="availabel_click1">
+        <div className="availabel_click2">
           <button className="a3"
             onClick={handleButtonClickAcc} >{showAccList ? 'Hide Accepted Projects' : 'Show Accepted Projects'} </button>
         </div>
@@ -174,10 +200,10 @@ const StudentHome = () => {
       <Navbar />
       <MyProjects />
       {/* <img src = "images/631.jpg" className="logo4" width = "900"/> */}
-      <div style={{ width: "40%", marginLeft: '820px', marginTop: '100px' }}>
-        <Lottie loop={true} animationData={student} classname="animation2" />
-      </div>
       <div className="row3">
+        <div className="animation_home" >
+          <Lottie loop={true} animationData={student} className="animation_new" />
+        </div>
         <div className="col5">
           <p className="col6">Learning is a treasure that will</p>
           <p className="col6">follow its owner everywhere</p>
